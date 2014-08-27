@@ -35,3 +35,5 @@ DEFAULT_PAGINATION = False
 THEME="/home/jens/Documents/projects/baSSHtion/pelican-bootstrap3"
 BOOTSTRAP_THEME="slate"
 
+STATIC_PATHS = ['images', 'extra/CNAME', 'extra/LICENSE', 'extra/README.md']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},'extra/LICENSE': {'path': 'LICENSE'},'extra/README.md': {'path': 'README.md'},}
