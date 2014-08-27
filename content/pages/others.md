@@ -6,6 +6,7 @@ Tags: others
 Slug: others
 Authors: Jens Neuhalfen
 Summary: Here are other possibilities
+SortOrder: 70
 
 
 ## Other Options

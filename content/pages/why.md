@@ -6,6 +6,7 @@ Tags: about, why, overview
 Slug: why
 Authors: Jens Neuhalfen
 Summary: What, why, and who?
+SortOrder: 100
 
 baSSHtion.org provides administrators the means to effectively implement controlled,and secure access to their hosted applications. It provides tools, and recipes for OpenSSH, and others.
 

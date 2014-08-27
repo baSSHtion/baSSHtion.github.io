@@ -6,6 +6,7 @@ Tags: about, overview, jumphost, interactive
 Slug: jump_host_non_interactive
 Authors: Jens Neuhalfen
 Summary: Using the bastion host to access backend systems via the  bastion host, but without an interactive session on the bastion host.
+SortOrder: 50
 
 
 Solution in detail
