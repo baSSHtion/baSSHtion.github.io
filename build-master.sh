@@ -8,3 +8,5 @@ git add -f .
 
 git commit -m"Rebuild html"
 git push -fq origin master
+cd ..
+git push --all -u
