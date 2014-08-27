@@ -35,3 +35,7 @@ BOOTSTRAP_THEME="slate"
 
 STATIC_PATHS = ['images', 'extra/CNAME', 'extra/LICENSE', 'extra/README.md']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},'extra/LICENSE': {'path': 'LICENSE'},'extra/README.md': {'path': 'README.md'},}
+
+# PYGMENTS_STYLE="solarizeddark"
+
+CC_LICENSE="CC-BY-SA"
