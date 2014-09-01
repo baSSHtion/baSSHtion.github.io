@@ -30,12 +30,14 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
+CUSTOM_CSS = 'custom.css'
+
 THEME="/home/jens/Documents/projects/baSSHtion/pelican-bootstrap3"
-BOOTSTRAP_THEME="darkly"
+BOOTSTRAP_THEME="solarizeddark"
 
-STATIC_PATHS = ['images', 'extra/CNAME', 'extra/LICENSE', 'extra/README.md']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},'extra/LICENSE': {'path': 'LICENSE'},'extra/README.md': {'path': 'README.md'},}
+STATIC_PATHS = ['images', 'extra/CNAME', 'extra/LICENSE', 'extra/README.md', 'extra/custom.cssa, ']
 
-# PYGMENTS_STYLE="solarizeddark"
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, 'extra/LICENSE': {'path': 'LICENSE'}, 'extra/README.md': {'path': 'README.md'}, 'extra/custom.css': {'path': 'custom.css'},} 
+PYGMENTS_STYLE="solarizeddark"
 
 CC_LICENSE="CC-BY-SA"

@@ -1,5 +1,4 @@
 Title: XXX
-Status: draft
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
 Category: ssh
@@ -7,9 +6,10 @@ Tags: about, overview
 Slug: index
 Authors: Jens Neuhalfen
 Summary: baSSHtion.org provides administrators the means to effectively implement controlled, and secure SSH access to their systems. It provides tools, and recipes for OpenSSH, and others.
+SortOrder: 10
+AddToMenu: False
 url: /
 save_as: index.html
-SortOrder: 10
 
 
 Often machines running in private nets need to be administered from the internet. The hypothetical example used here is a moderate complex application running on the internet. This application has a webserver facing to the internet, and a database server plus the application servers as backend systems. These machines are administered via SSH. For security reasons it is undesirable to expose the backend systems to the internet. Several solutions to this problem statement are dicussed here.
