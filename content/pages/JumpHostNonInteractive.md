@@ -1,4 +1,4 @@
-Title: JumpHost without interactive terminal
+Title: JumpHost/non-interactive
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
 Category: ssh

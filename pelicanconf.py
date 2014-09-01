@@ -18,9 +18,9 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('OpenSSH.org', 'http://www.openssh.com/'),
-         ('GitHub', 'https://github.com/baSSHtion/'),)
+LINKS = (('OpenSSH.com', 'http://www.openssh.com/'),
+         ('baSSHtion on GitHub', 'https://github.com/baSSHtion/'),
+         ('Pelican', 'http://getpelican.com/'),)
 
 # Social widget
 SOCIAL = () # (('You can add links in your config file', '#'),
@@ -31,7 +31,7 @@ DEFAULT_PAGINATION = False
 RELATIVE_URLS = True
 
 THEME="/home/jens/Documents/projects/baSSHtion/pelican-bootstrap3"
-BOOTSTRAP_THEME="slate"
+BOOTSTRAP_THEME="darkly"
 
 STATIC_PATHS = ['images', 'extra/CNAME', 'extra/LICENSE', 'extra/README.md']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},'extra/LICENSE': {'path': 'LICENSE'},'extra/README.md': {'path': 'README.md'},}

@@ -8,9 +8,9 @@ Authors: Jens Neuhalfen
 Summary: What, why, and who?
 SortOrder: 100
 
-baSSHtion.org provides administrators the means to effectively implement controlled,and secure access to their hosted applications. It provides tools, and recipes for OpenSSH, and others.
+baSSHtion.org provides administrators the means to effectively implement controlled, and secure SSH access to their hosted applications. It provides tools, and recipes for OpenSSH, and others.
 
-The site has been set up out of the need to provide secured access to my private collection of servers. I could not find many good
+The site has been set up out of the need to provide secured access to my private collection of servers. I could not find many good resources on the internet, so I decided to publish what I found out to help others in a similar situation.
 
 
 

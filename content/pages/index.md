@@ -1,12 +1,13 @@
-Title: About baSSHtion
+Title: XXX
+Status: draft
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
 Category: ssh
 Tags: about, overview
 Slug: index
 Authors: Jens Neuhalfen
-Summary: baSSHtion.org provides administrators the means to effectively implement controlled,and secure access to their hosted applications. It provides tools, and recipes for OpenSSH, and others.
-url: 
+Summary: baSSHtion.org provides administrators the means to effectively implement controlled, and secure SSH access to their systems. It provides tools, and recipes for OpenSSH, and others.
+url: /
 save_as: index.html
 SortOrder: 10
 
@@ -15,7 +16,7 @@ Often machines running in private nets need to be administered from the internet
 
 ![]({filename}/images/Overview.png)
 
-Managing such a setup relies on (at least) two roles: Application Operators (short: operator) that manage the applications on the backend systems (but do not manage the operating system), and System Administrators (short: administrator) that manage the operating system (including user management, and SSH). System Administrators have access to the role of `root`, whereas operators don't have this role. Distinguishing between these roles allows for a better reasoning in terms of access control, even if these roles are often carried out (*TODO: richtiges Wort?*) by the same person.
+Managing such a setup relies on (at least) two roles: _Application Operators_ (short: _operator_) that manage the applications on the backend systems (but do not manage the operating system), and _System Administrators_ (short: _administrator_) that manage the operating system (including user management, and SSH). System Administrators have access to the role of `root`, whereas operators don't have this role. Distinguishing between these roles allows for a better reasoning in terms of access control, even if these roles are often carried out (*TODO: richtiges Wort?*) by the same person.
 
 There exist several possibilities to allow operators to access the backend systems. The following options are often use to achieve this (follow the links for examples):
 
