@@ -65,6 +65,9 @@ Build everything, commit to `master` and push to github
 Install pelican
 ===============
 ```
+virtualenv ../pelican.venv
+. ../pelican.venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
