@@ -1,5 +1,5 @@
 #!/bin/bash
-make html
+make publish
 rm -rf tmp
 git clone --quiet --branch=master . tmp
 rsync -rvd --exclude=.git  output/* ./tmp
