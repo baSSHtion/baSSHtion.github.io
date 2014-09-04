@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Categories - baSSHtion</title>
+    <title>DNAT - baSSHtion</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,15 +10,12 @@
 
 
 
+<link rel="canonical" href="./dnat.html">
 
         <meta name="author" content="Jens Neuhalfen" />
+        <meta name="keywords" content="about,overview,dnat,firewall" />
+        <meta name="description" content="Using the firewall to access backend systems via DNAT." />
 
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="baSSHtion" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="baSSHtion"/>
-        <meta property="og:url" content="."/>
-        <meta property="og:description" content="baSSHtion"/>
 
 
     <!-- Bootstrap -->
@@ -81,39 +78,149 @@ baSSHtion            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="categories">
-        <h1>All Categories for baSSHtion</h1>
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-implementation-options">Implementation Options <span class="badge pull-right">4</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-implementation-options" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./dnat.html"><span class="caps">DNAT</span></a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_interactive.html">JumpHost/interactive</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./proxy_command.html">ProxyCommand</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-misc">Misc <span class="badge pull-right">1</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-misc" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./others.html">Others</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./dnat.html"
+                       rel="bookmark"
+                       title="Permalink to DNAT">
+                        <span class="caps">DNAT</span>
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <h1>Solutions in&nbsp;detail</h1>
+<p>In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&nbsp;deal.</p>
+<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
+<ul>
+<li><em>fully</em> fulfills the&nbsp;requirement,</li>
+<li><em>partially</em> fulfills the&nbsp;requirement</li>
+<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
+</ul>
+<h2>Port <span class="caps">DNAT</span></h2>
+<p>When using Port <span class="caps">DNAT</span> to access backend hosts, the backend hosts are partially exposed to the internet. The firewall will forward a port on its external interface to an ssh server running on a backend system. E.g. <code>public-ip:2224</code> is forwarded to <code>db-server:22</code>, and <code>public-ip:2223</code> is forwarded to <code>app-server:22</code>. </p>
+<p><img alt="" src="./images/DNAT.png" /></p>
+<p>The operator points ssh to the public ip, e.g. <code>ssh public-ip -p2222</code> to transparently ssh to <code>db-server</code>.</p>
+<h3>Example&nbsp;implementation</h3>
+<p>Setting up <span class="caps">NAT</span> is straight forward and requires a single firewall change per host.  Users are only managed on the backend&nbsp;systems.</p>
+<h4>Adding a new backend&nbsp;host</h4>
+<p>If the firewall is a Linux host, then the following <code>iptables</code> rules for the firewall sever implement the port <span class="caps">DNAT</span> from <code>public-ip:2224</code> to <code>db-serv:22</code>:</p>
+<div class="highlight"><pre><span class="c"># run on the firewall</span>
 
+<span class="nv">FIREWALL_EXTERNAL_IF</span><span class="o">=</span>eth0
+<span class="nv">EXTERNAL_SRC_PORT</span><span class="o">=</span>2224
+<span class="nv">BACKEND_SERVER</span><span class="o">=</span><span class="k">$(</span>hostname db-serv<span class="k">)</span>
+
+<span class="c"># TODO: Implement</span>
+
+iptables -A  ...
+</pre></div>
+
+
+<p>Connecting to the database server from the internet is done by sshing to the specific&nbsp;port: </p>
+<div class="highlight"><pre><span class="c"># run on the operators system</span>
+
+ssh public-ip -p2224
+</pre></div>
+
+
+<h4>Adding a new&nbsp;user</h4>
+<p>New users are only added to the backend&nbsp;systems.</p>
+<h3>Evaluation</h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>requirement fulfilled</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><span class="caps">REQ</span> 1: Bastion Host</em></td>
+<td>partially</td>
+<td>The firewall reduces the attack surface of the backend systems to the ssh port.</td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 2: Auditable</em></td>
+<td>no</td>
+<td>Only <span class="caps">SSH</span> encrypted traffic passes through the firewall, preventing an audit of the content.</td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 3: Fine grained permissions</em></td>
+<td>no</td>
+<td>The firewall can only restrict communication to specific source/destination addresses.</td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 4: Robustness</em></td>
+<td>fully</td>
+<td>Changes are limited to one system, making them very robust to carry out.</td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 5: Four eyes principle for usermanagement</em></td>
+<td>no</td>
+<td>Anybody who can manage users on a backend system can do so alone. Anyone who can administer the firewall can add/remove hosts.</td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 6: Port forwarding</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 7: scp</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Conclusion</h3>
+<h4>Strengths</h4>
+<ul>
+<li>Very simple to set&nbsp;up</li>
+<li>Works well for smaller systems and when the requirements are less&nbsp;strict</li>
+<li>All <span class="caps">SSH</span> sub-protocolls,  and tools work without any changes (<code>sftp</code>, port-forwarding, <code>rsync</code>,&nbsp;&#8230;)</li>
+</ul>
+<h4>Weaknesses</h4>
+<ul>
+<li>Many requirements not&nbsp;fulfilled.</li>
+<li>All backend systems are directly exposed to the internet. This makes patching&nbsp;harder.</li>
+<li>Might get complex, when many backend systems are installed and/or they frequently change (<em>Which port was server 4711 again?</em>)</li>
+</ul>
+<h4>Final&nbsp;words</h4>
+<p>A simple solution for small scale systems with modest requirements regarding&nbsp;security.</p>
+<h4>Additional&nbsp;Ressources</h4>
+<ul>
+<li><a href="TODO">iptables</a></li>
+<li><a href="TODO">NATing</a></li>
+</ul>
+                <hr/>
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-08-23T22:20:00"> Sa 23 August 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/about.html">about</a>
+        /
+	<a href="./tag/overview.html">overview</a>
+        /
+	<a href="./tag/dnat.html">dnat</a>
+        /
+	<a href="./tag/firewall.html">firewall</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+            </div>
+            <!-- /.entry-content -->
+        </article>
     </section>
+
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 

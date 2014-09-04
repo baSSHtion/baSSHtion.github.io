@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Categories - baSSHtion</title>
+    <title>JumpHost/non-interactive - baSSHtion</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,15 +10,12 @@
 
 
 
+<link rel="canonical" href="./jump_host_non_interactive.html">
 
         <meta name="author" content="Jens Neuhalfen" />
+        <meta name="keywords" content="about,overview,jumphost,interactive" />
+        <meta name="description" content="Using the bastion host to access backend systems via the bastion host, but without an interactive session on the bastion host." />
 
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="baSSHtion" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="baSSHtion"/>
-        <meta property="og:url" content="."/>
-        <meta property="og:description" content="baSSHtion"/>
 
 
     <!-- Bootstrap -->
@@ -81,39 +78,123 @@ baSSHtion            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="categories">
-        <h1>All Categories for baSSHtion</h1>
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-implementation-options">Implementation Options <span class="badge pull-right">4</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-implementation-options" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./dnat.html"><span class="caps">DNAT</span></a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_interactive.html">JumpHost/interactive</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./proxy_command.html">ProxyCommand</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-misc">Misc <span class="badge pull-right">1</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-misc" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./others.html">Others</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./jump_host_non_interactive.html"
+                       rel="bookmark"
+                       title="Permalink to JumpHost/non-interactive">
+                        JumpHost/non-interactive
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <h1>Solution in&nbsp;detail</h1>
+<p>In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&nbsp;deal.</p>
+<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
+<ul>
+<li><em>fully</em> fulfills the&nbsp;requirement,</li>
+<li><em>partially</em> fulfills the&nbsp;requirement</li>
+<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
+</ul>
+<h2>Jump Host without interactive&nbsp;session</h2>
+<p><img alt="" src="./images/JumpHost-ForcedCommand.png" /></p>
+<h3>Example&nbsp;implementation</h3>
+<div class="highlight"><pre><span class="n">ssh</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">A</span> <span class="n">public</span><span class="o">-</span><span class="n">ip</span> <span class="s">&quot;script -c &#39;ssh db-server&#39;&quot;</span> 
+</pre></div>
 
+
+<p>or, more&nbsp;elaborate:</p>
+<div class="highlight"><pre><span class="n">ssh</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">A</span> <span class="mf">127.0.0.1</span> <span class="s">&quot;script -c &#39;ssh db.server&#39; --timing=/tmp/script.timing /tmp/script.log&quot;</span> 
+</pre></div>
+
+
+<p>Replaying the recorded&nbsp;session:</p>
+<div class="highlight"><pre> <span class="n">scriptreplay</span> <span class="o">--</span><span class="n">timing</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">script</span><span class="p">.</span><span class="n">timing</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">script</span><span class="p">.</span><span class="n">log</span>
+</pre></div>
+
+
+<h4>Adding a new backend&nbsp;host</h4>
+<h4>Adding a new&nbsp;user</h4>
+<h3>Evaluation</h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>requirement fulfilled</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><span class="caps">REQ</span> 1: Bastion Host</em></td>
+<td>partially</td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 2: Auditable</em></td>
+<td>no</td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 3: Fine grained permissions</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 4: Robustness</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 5: Four eyes principle for usermanagement</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 6: Port forwarding</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em><span class="caps">REQ</span> 7: scp</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Conclusion</h2>
+<h4>Strengths</h4>
+<h4>Weaknesses</h4>
+<h4>Final&nbsp;words</h4>
+                <hr/>
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-08-23T22:20:00"> Sa 23 August 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/about.html">about</a>
+        /
+	<a href="./tag/overview.html">overview</a>
+        /
+	<a href="./tag/jumphost.html">jumphost</a>
+        /
+	<a href="./tag/interactive.html">interactive</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+            </div>
+            <!-- /.entry-content -->
+        </article>
     </section>
+
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 

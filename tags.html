@@ -17,16 +17,18 @@
         <meta property="og:site_name" content="baSSHtion" />
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="baSSHtion"/>
-        <meta property="og:url" content="http://www.basshtion.org"/>
+        <meta property="og:url" content="."/>
         <meta property="og:description" content="baSSHtion"/>
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="http://www.basshtion.org/theme/css/bootstrap.slate.min.css" type="text/css"/>
-    <link href="http://www.basshtion.org/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://www.basshtion.org/theme/css/pygments/native.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://www.basshtion.org/theme/css/style.css" type="text/css"/>
+    <link href="./theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="./theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+        <link href="./static/custom.css" rel="stylesheet">
 
 
 </head>
@@ -41,14 +43,34 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="http://www.basshtion.org/" class="navbar-brand">
+            <a href="./" class="navbar-brand">
 baSSHtion            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
+                             <li><a href="./pages/why.html">
+                             Why?
+                             </a></li>
+                        <li class="dropdown">
+                                      <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
+                              <ul class="dropdown-menu" aria-labelledby="implementation-options">
+                                                <li><a href="./dnat.html"><span class="caps">DNAT</span></a></li>
+                                                <li><a href="./proxy_command.html">ProxyCommand</a></li>
+                                                <li><a href="./jump_host_interactive.html">JumpHost/interactive</a></li>
+                                                <li><a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
+                              </ul>
+                            </li>
+                        </li>
+                        <li class="dropdown">
+                                      <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="misc">Misc <span class="caret"></span></a>
+                              <ul class="dropdown-menu" aria-labelledby="misc">
+                                                <li><a href="./others.html">Others</a></li>
+                              </ul>
+                            </li>
+                        </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://www.basshtion.org/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -61,7 +83,111 @@ baSSHtion            </a>
 
     <section id="tags">
         <h1>Tags for baSSHtion</h1>
-        <div class="panel-group" id="accordion">        </div>
+        <div class="panel-group" id="accordion">            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-about">about <span class="badge pull-right">4</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-about" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./dnat.html"><span class="caps">DNAT</span></a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_interactive.html">JumpHost/interactive</a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./proxy_command.html">ProxyCommand</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-dnat">dnat <span class="badge pull-right">1</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-dnat" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./dnat.html"><span class="caps">DNAT</span></a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-firewall">firewall <span class="badge pull-right">1</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-firewall" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./dnat.html"><span class="caps">DNAT</span></a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-interactive">interactive <span class="badge pull-right">2</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-interactive" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_interactive.html">JumpHost/interactive</a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-jumphost">jumphost <span class="badge pull-right">2</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-jumphost" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_interactive.html">JumpHost/interactive</a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-others">others <span class="badge pull-right">1</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-others" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./others.html">Others</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-overview">overview <span class="badge pull-right">4</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-overview" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./dnat.html"><span class="caps">DNAT</span></a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_interactive.html">JumpHost/interactive</a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></p>
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./proxy_command.html">ProxyCommand</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-proxycommand">ProxyCommand <span class="badge pull-right">1</span></a>
+                    </h4>
+                </div>
+                <div id="collapse-proxycommand" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p><span class="categories-timestamp"><time datetime="2014-08-23T22:20:00">Sa 23 August 2014</time></span> <a href="./proxy_command.html">ProxyCommand</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </section>
         </div>
@@ -70,39 +196,68 @@ baSSHtion            </a>
 <aside>
     <section>
         <ul class="list-group list-group-flush">
-                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-                  <ul class="list-group" id="social">
-                    <li class="list-group-item"><a href="#"><i class="fa fa-you-can-add-links-in-your-config-file-square fa-lg"></i> You can add links in your config file</a></li>
-                    <li class="list-group-item"><a href="#"><i class="fa fa-another-social-link-square fa-lg"></i> Another social link</a></li>
-                  </ul>
-                </li>
 
 
 
-                <li class="list-group-item"><a href="http://www.basshtion.org/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/overview.html">
+                                overview
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/about.html">
+                                about
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="./tag/interactive.html">
+                                interactive
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="./tag/jumphost.html">
+                                jumphost
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/others.html">
+                                others
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/proxycommand.html">
+                                ProxyCommand
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/firewall.html">
+                                firewall
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/dnat.html">
+                                dnat
+                            </a>
+                        </li>
                     </ul>
                 </li>    
     <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
       <ul class="list-group" id="links">
         <li class="list-group-item">
+            <a href="http://www.openssh.com/" target="_blank">
+                OpenSSH.com
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/baSSHtion/" target="_blank">
+                baSSHtion on GitHub
+            </a>
+        </li>
+        <li class="list-group-item">
             <a href="http://getpelican.com/" target="_blank">
                 Pelican
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="http://python.org/" target="_blank">
-                Python.org
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="http://jinja.pocoo.org/" target="_blank">
-                Jinja2
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="#" target="_blank">
-                You can modify those links in your config file
             </a>
         </li>
       </ul>
@@ -118,21 +273,25 @@ baSSHtion            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy;  Jens Neuhalfen
+         <div class="col-xs-10">&copy; 2014 Jens Neuhalfen
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
          <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
       </div>
    </div>
 </footer>
-<script src="http://www.basshtion.org/theme/js/jquery.min.js"></script>
+<script src="./theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://www.basshtion.org/theme/js/bootstrap.min.js"></script>
+<script src="./theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="http://www.basshtion.org/theme/js/respond.min.js"></script>
+<script src="./theme/js/respond.min.js"></script>
 
 </body>
 </html>
