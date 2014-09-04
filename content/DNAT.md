@@ -1,7 +1,7 @@
 Title: DNAT
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
-Category: ssh
+Category: Implementation Options
 Tags: about, overview, dnat, firewall
 Slug: dnat
 Authors: Jens Neuhalfen

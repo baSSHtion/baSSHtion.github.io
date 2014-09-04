@@ -1,7 +1,7 @@
 Title: Others
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
-Category: ssh
+Category: Misc
 Tags: others
 Slug: others
 Authors: Jens Neuhalfen

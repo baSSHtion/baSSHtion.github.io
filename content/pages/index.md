@@ -38,7 +38,7 @@ Solutions
 There exist several possibilities to allow operators to access the backend systems. Some of the more popular solutions are:
 
 1. [Port *DNAT*]({filename}/DNAT.md), where a host exposed to the internet [DNATs](http://en.wikipedia.org/wiki/Network_address_translation#DNAT) some of its ports to the backed systems. E.g. `public-ip:2224` is forwarded to `db-server:22`, and `public-ip:2222` is forwarded to `app-server:22`. To access the DB server the operator points ssh to the public ip, e.g. `ssh public-ip -p2224`.
-2. A built in solutions is the [*ProxyCommand*](ProxyCommand.md) to provide the connection to the backend system (e.g. `ssh public-ip -o ProxyCommand "nc app-server 22"`)
+2. A built in solutions is the [*ProxyCommand*]({filename}/ProxyCommand.md) to provide the connection to the backend system (e.g. `ssh public-ip -o ProxyCommand "nc app-server 22"`)
 3. [*Jump Host with interactive session*]({filename}/JumpHostInteractive.md), where a host exposed to the internet provides SSH access with an interactive terminal. Operators connect to this host, and then manually open a new SSH connection to the next host. Authentication on the backend hosts is (often) done via agent forwarding to prevent storing secret keys on the exposed machine. E.g. `ssh -A public-ip` and there `ssh db-server`.
 4. [*Jump Host without interactive session*]({filename}/JumpHostNonInteractive.md), as above but without an interactive session (shell) on the bastion host. When system administrators connect to this host a new SSH connection to the next host is automatically opened via a _forced command_. Authentication on the backend hosts is done via agent forwarding. E.g. `ssh -A public-ip app-server`.
 5. [*Other solutions*]({filename}/others.md)

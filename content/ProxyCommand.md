@@ -1,12 +1,12 @@
-Title: JumpHost/non-interactive
+Title: ProxyCommand
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
-Category: ssh
-Tags: about, overview, jumphost, interactive
-Slug: jump_host_non_interactive
+Category: Implementation Options
+Tags: about, overview, ProxyCommand
+Slug: proxy_command
 Authors: Jens Neuhalfen
-Summary: Using the bastion host to access backend systems via the  bastion host, but without an interactive session on the bastion host.
-SortOrder: 50
+Summary: The SSH `ProxyCommand` is a configuration that tells the SSH client how to make the connection to the SSH server.  
+SortOrder: 30
 
 
 Solution in detail
@@ -21,28 +21,12 @@ An evaluation of each of the requirements stated is given, and summarized in the
 - _no_ or inadequate fulfillment of the requirement
 
 
+## Via `ProxyCommand`
 
-## Jump Host without interactive session
-
-![]({filename}/images/JumpHost-ForcedCommand.png)
+An SSH `ProxyCommand` is a configuration that tells the SSH client how to make the connection to the SSH server. When a proxy command is specified for a connection, then SSH
+![]({filename}/images/ProxyCommand.png)
 
 ### Example implementation
-
-```
-ssh -t -A public-ip "script -c 'ssh db-server'" 
-```
-
- or, more elaborate:
-
-```
-ssh -t -A 127.0.0.1 "script -c 'ssh db.server' --timing=/tmp/script.timing /tmp/script.log" 
-```
-
-Replaying the recorded session:
-```
- scriptreplay --timing=/tmp/script.timing /tmp/script.log
-```
-
 #### Adding a new backend host
 #### Adding a new user
 ### Evaluation
@@ -57,7 +41,7 @@ Replaying the recorded session:
 | *REQ 7: scp*  | | |
 
 
-## Conclusion
+### Conclusion
 #### Strengths
-#### Weaknesses
+#### Contra
 #### Final words
