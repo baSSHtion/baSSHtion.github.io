@@ -90,7 +90,29 @@ baSSHtion            </a>
                 </h1>
             </header>
             <div class="entry-content">
-                <h1>Solutions in&nbsp;detail</h1>
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-08-23T22:20:00"> Sa 23 August 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/about.html">about</a>
+        /
+	<a href="./tag/overview.html">overview</a>
+        /
+	<a href="./tag/dnat.html">dnat</a>
+        /
+	<a href="./tag/firewall.html">firewall</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p><strong><span class="caps">WORK</span> <span class="caps">IN</span> <span class="caps">PROGRESS</span></strong></p>
+<h1>Solutions in&nbsp;detail</h1>
 <p>In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&nbsp;deal.</p>
 <p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
 <ul>
@@ -112,9 +134,7 @@ baSSHtion            </a>
 <span class="nv">EXTERNAL_SRC_PORT</span><span class="o">=</span>2224
 <span class="nv">BACKEND_SERVER</span><span class="o">=</span><span class="k">$(</span>hostname db-serv<span class="k">)</span>
 
-<span class="c"># TODO: Implement</span>
-
-iptables -A  ...
+iptables -t nat -I PREROUTING -i <span class="k">${</span><span class="nv">FIREWALL_EXTERNAL_IF</span><span class="k">}</span> -p tcp --dport <span class="k">${</span><span class="nv">EXTERNAL_SRC_PORT</span><span class="k">}</span>  -m state --state NEW -j DNAT --to <span class="k">${</span><span class="nv">BACKEND_SERVER</span><span class="k">}</span>:22
 </pre></div>
 
 
@@ -191,31 +211,9 @@ ssh public-ip -p2224
 <p>A simple solution for small scale systems with modest requirements regarding&nbsp;security.</p>
 <h4>Additional&nbsp;Ressources</h4>
 <ul>
-<li><a href="TODO">iptables</a></li>
-<li><a href="TODO">NATing</a></li>
+<li><a href="http://www.netfilter.org/">iptables</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Network_address_translation">NATing</a></li>
 </ul>
-                <hr/>
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-08-23T22:20:00"> Sa 23 August 2014</time>
-    </span>
-
-
-
-<span class="label label-default">Tags</span>
-	<a href="./tag/about.html">about</a>
-        /
-	<a href="./tag/overview.html">overview</a>
-        /
-	<a href="./tag/dnat.html">dnat</a>
-        /
-	<a href="./tag/firewall.html">firewall</a>
-    
-</footer><!-- /.post-info -->                    </div>
-                </div>
             </div>
             <!-- /.entry-content -->
         </article>
@@ -233,18 +231,13 @@ ssh public-ip -p2224
                 <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="./tag/overview.html">
-                                overview
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="./tag/about.html">
                                 about
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="./tag/interactive.html">
-                                interactive
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/overview.html">
+                                overview
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -252,14 +245,9 @@ ssh public-ip -p2224
                                 jumphost
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="./tag/others.html">
-                                others
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="./tag/proxycommand.html">
-                                ProxyCommand
+                        <li class="list-group-item tag-2">
+                            <a href="./tag/interactive.html">
+                                interactive
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -270,6 +258,16 @@ ssh public-ip -p2224
                         <li class="list-group-item tag-4">
                             <a href="./tag/dnat.html">
                                 dnat
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/proxycommand.html">
+                                ProxyCommand
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/others.html">
+                                others
                             </a>
                         </li>
                     </ul>

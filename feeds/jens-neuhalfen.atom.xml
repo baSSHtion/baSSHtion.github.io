@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>baSSHtion</title><link href="http://www.basshtion.org/" rel="alternate"></link><link href="http://www.basshtion.org/feeds/jens-neuhalfen.atom.xml" rel="self"></link><id>http://www.basshtion.org/</id><updated>2014-08-24T23:15:00+02:00</updated><entry><title>DNAT</title><link href="http://www.basshtion.org/dnat.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:dnat.html</id><summary type="html">&lt;h1&gt;Solutions in&amp;nbsp;detail&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>baSSHtion</title><link href="http://www.basshtion.org/" rel="alternate"></link><link href="http://www.basshtion.org/feeds/jens-neuhalfen.atom.xml" rel="self"></link><id>http://www.basshtion.org/</id><updated>2014-08-24T23:15:00+02:00</updated><entry><title>DNAT</title><link href="http://www.basshtion.org/dnat.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:dnat.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;WORK&lt;/span&gt; &lt;span class="caps"&gt;IN&lt;/span&gt; &lt;span class="caps"&gt;PROGRESS&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h1&gt;Solutions in&amp;nbsp;detail&lt;/h1&gt;
 &lt;p&gt;In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&amp;nbsp;deal.&lt;/p&gt;
 &lt;p&gt;An evaluation of each of the requirements stated is given, and summarized in the&amp;nbsp;result&lt;/p&gt;
 &lt;ul&gt;
@@ -21,9 +22,7 @@
 &lt;span class="nv"&gt;EXTERNAL_SRC_PORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2224
 &lt;span class="nv"&gt;BACKEND_SERVER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;hostname db-serv&lt;span class="k"&gt;)&lt;/span&gt;
 
-&lt;span class="c"&gt;# TODO: Implement&lt;/span&gt;
-
-iptables -A  ...
+iptables -t nat -I PREROUTING -i &lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;FIREWALL_EXTERNAL_IF&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt; -p tcp --dport &lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;EXTERNAL_SRC_PORT&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt;  -m state --state NEW -j DNAT --to &lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;BACKEND_SERVER&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt;:22
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -100,9 +99,10 @@ ssh public-ip -p2224
 &lt;p&gt;A simple solution for small scale systems with modest requirements regarding&amp;nbsp;security.&lt;/p&gt;
 &lt;h4&gt;Additional&amp;nbsp;Ressources&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="TODO"&gt;iptables&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="TODO"&gt;NATing&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="about"></category><category term="overview"></category><category term="dnat"></category><category term="firewall"></category></entry><entry><title>JumpHost/interactive</title><link href="http://www.basshtion.org/jump_host_interactive.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:jump_host_interactive.html</id><summary type="html">&lt;h1&gt;Solution in&amp;nbsp;detail&lt;/h1&gt;
+&lt;li&gt;&lt;a href="http://www.netfilter.org/"&gt;iptables&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Network_address_translation"&gt;NATing&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="about"></category><category term="overview"></category><category term="dnat"></category><category term="firewall"></category></entry><entry><title>JumpHost/interactive</title><link href="http://www.basshtion.org/jump_host_interactive.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:jump_host_interactive.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;WORK&lt;/span&gt; &lt;span class="caps"&gt;IN&lt;/span&gt; &lt;span class="caps"&gt;PROGRESS&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h1&gt;Solution in&amp;nbsp;detail&lt;/h1&gt;
 &lt;p&gt;In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&amp;nbsp;deal.&lt;/p&gt;
 &lt;p&gt;An evaluation of each of the requirements stated is given, and summarized in the&amp;nbsp;result&lt;/p&gt;
 &lt;ul&gt;
@@ -165,7 +165,8 @@ ssh public-ip -p2224
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;h4&gt;Strengths&lt;/h4&gt;
 &lt;h4&gt;Weaknesses&lt;/h4&gt;
-&lt;h4&gt;Final&amp;nbsp;words&lt;/h4&gt;</summary><category term="about"></category><category term="overview"></category><category term="jumphost"></category><category term="interactive"></category></entry><entry><title>JumpHost/non-interactive</title><link href="http://www.basshtion.org/jump_host_non_interactive.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:jump_host_non_interactive.html</id><summary type="html">&lt;h1&gt;Solution in&amp;nbsp;detail&lt;/h1&gt;
+&lt;h4&gt;Final&amp;nbsp;words&lt;/h4&gt;</summary><category term="about"></category><category term="overview"></category><category term="jumphost"></category><category term="interactive"></category></entry><entry><title>JumpHost/non-interactive</title><link href="http://www.basshtion.org/jump_host_non_interactive.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:jump_host_non_interactive.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;WORK&lt;/span&gt; &lt;span class="caps"&gt;IN&lt;/span&gt; &lt;span class="caps"&gt;PROGRESS&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h1&gt;Solution in&amp;nbsp;detail&lt;/h1&gt;
 &lt;p&gt;In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&amp;nbsp;deal.&lt;/p&gt;
 &lt;p&gt;An evaluation of each of the requirements stated is given, and summarized in the&amp;nbsp;result&lt;/p&gt;
 &lt;ul&gt;
@@ -246,7 +247,8 @@ ssh public-ip -p2224
 &lt;ul&gt;
 &lt;li&gt;a PoC of a &lt;a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack"&gt;transparent proxy&lt;/a&gt; that implements a &lt;a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack"&gt;Man in the Middle Attack&lt;/a&gt; on &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;connections.&lt;/li&gt;
 &lt;li&gt;a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="others"></category></entry><entry><title>ProxyCommand</title><link href="http://www.basshtion.org/proxy_command.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:proxy_command.html</id><summary type="html">&lt;h1&gt;Solution in&amp;nbsp;detail&lt;/h1&gt;
+&lt;/ul&gt;</summary><category term="others"></category></entry><entry><title>ProxyCommand</title><link href="http://www.basshtion.org/proxy_command.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:proxy_command.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;WORK&lt;/span&gt; &lt;span class="caps"&gt;IN&lt;/span&gt; &lt;span class="caps"&gt;PROGRESS&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h1&gt;Solution in&amp;nbsp;detail&lt;/h1&gt;
 &lt;p&gt;In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&amp;nbsp;deal.&lt;/p&gt;
 &lt;p&gt;An evaluation of each of the requirements stated is given, and summarized in the&amp;nbsp;result&lt;/p&gt;
 &lt;ul&gt;
