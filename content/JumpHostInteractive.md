@@ -9,6 +9,8 @@ Summary: Using the bastion host to access backend systems via a terminal session
 SortOrder: 40
 
 
+**WORK IN PROGRESS**
+
 Solution in detail
 ====================
 

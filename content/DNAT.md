@@ -8,6 +8,7 @@ Authors: Jens Neuhalfen
 Summary: Using the firewall to access backend systems via DNAT.
 SortOrder: 20
 
+**WORK IN PROGRESS**
 
 Solutions in detail
 ====================
@@ -41,9 +42,8 @@ FIREWALL_EXTERNAL_IF=eth0
 EXTERNAL_SRC_PORT=2224
 BACKEND_SERVER=$(hostname db-serv)
 
-# TODO: Implement
+iptables -t nat -I PREROUTING -i ${FIREWALL_EXTERNAL_IF} -p tcp --dport ${EXTERNAL_SRC_PORT}  -m state --state NEW -j DNAT --to ${BACKEND_SERVER}:22
 
-iptables -A  ...
 ```
 
 Connecting to the database server from the internet is done by sshing to the specific port: 
@@ -53,6 +53,7 @@ Connecting to the database server from the internet is done by sshing to the spe
 
 ssh public-ip -p2224
 ```
+
 #### Adding a new user
 New users are only added to the backend systems.
 
@@ -83,5 +84,5 @@ New users are only added to the backend systems.
 A simple solution for small scale systems with modest requirements regarding security.
 
 #### Additional Ressources
-* [iptables](TODO)
-* [NATing](TODO)
+* [iptables](http://www.netfilter.org/)
+* [NATing](https://en.wikipedia.org/wiki/Network_address_translation)
