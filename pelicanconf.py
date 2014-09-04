@@ -40,3 +40,5 @@ BOOTSTRAP_THEME = "solarizeddark"
 PYGMENTS_STYLE = "solarizeddark"
 
 CC_LICENSE="CC-BY-SA"
+
+TYPOGRIFY=True
