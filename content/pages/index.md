@@ -1,4 +1,4 @@
-Title: Securely administer server via SSH
+Title: Securely administer multiple server via SSH
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
 Category: ssh
@@ -13,9 +13,11 @@ save_as: index.html
 
 The basic question answered by baSSHtion.org is:
 
-**How can an operator/administrator securely manage backend servers not directly exposed to the internet?**
+**How can an operator/administrator securely manage backend server through the internet?**
 
-Often machines running in private nets need to be administered from the internet. The hypothetical example used here is a moderate complex application running on the internet. This application has a webserver facing to the internet, and a database server plus application servers as backend systems. These machines are administered via SSH. For security reasons it is undesirable to expose the backend systems to the internet. 
+Often machines running in private nets need to be administered from the internet. The hypothetical example used here is a moderate complex application running on the internet. This application has a webserver facing to the internet, a database server, and an application server as backend systems. These machines are administered via SSH. For security reasons it is undesirable to expose the backend systems to the internet. 
+
+SSHv1 is completely out of scope, because is has severe securityissues. Only SSHv2 options are considered. The SSH implementation used in the exapmles is [OpenSSH](http://www.openssh.com/).
 
 Several solutions to this problem statement are dicussed here.
 
@@ -29,8 +31,8 @@ Basic Requirements
 These are the basic requirements that each of the solutions is evaluated against:
 
 - **REQ 1: _Secured to the end_** The whole connection from the operators system (internet) to the backend system must be secured via SSH.
-- **REQ 2: _no escape for operators_** Operators must not be able to break out of the system (whereas system administrators might be able t do so). What _breaking out_ means depends on the solution but it basically means, that the operator has to follow the rules set by the system administrator.
-- **REQ 3: _Bastion Host_** Only one host shout be exposed to the internet (_bastion host_). This is the core means to prevent internet access to the backend systems.
+- **REQ 2: _no escape for operators_** Operators must not be able to break out of the system (whereas system administrators might be able to do so). What _breaking out_ means depends on the solution but it basically means, that the operator has to follow the rules set by the system administrator.
+- **REQ 3: _Bastion Host_** Only one host shout be exposed to the internet (the _bastion host_). This is the core means to prevent internet access to the backend systems.
 
 Solutions
 ----------------------
@@ -61,7 +63,7 @@ When the system gets larger, and/or handles sensitive data, additional requireme
 Wording
 ----------
 * **Administrator** : The role responsible for managing the access control system (and the operating system). Can add/delete users on all systems. Has `root` access to all machines.
-* **Operator** : A user responsible for managing the application. Has accounts on the backend systems, potentially even `root`.  An operator *might* have accounts on the bastion host, but never with `root` level access.
+* **Operator** : A user responsible for managing the application. Has accounts on the backend systems, but not `root`.  An operator *might* have accounts on the bastion host, but never with `root` level access.
 * **SSH** : The OpenSSH tools (client/server) or protocol. SSHv1 is not considered.
 * **`ssh`** : The OpenSSH SSH client.
 
