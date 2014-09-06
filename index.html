@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Securely administer server via <span class="caps">SSH</span> - baSSHtion</title>
+    <title>Securely administer multiple server via <span class="caps">SSH</span> - baSSHtion</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -17,7 +17,7 @@
 
     <meta property="og:site_name" content="baSSHtion" />
     <meta property="og:type" content="article"/>
-    <meta property="og:title" content="Securely administer server via SSH"/>
+    <meta property="og:title" content="Securely administer multiple server via SSH"/>
     <meta property="og:url" content=".//"/>
     <meta property="og:description" content="baSSHtion.org provides administrators the means to effectively implement controlled, and secure SSH access to their systems. It provides tools, and recipes for OpenSSH, and others." />
 
@@ -52,6 +52,9 @@ baSSHtion            </a>
                              <li><a href="./pages/why.html">
                              Why?
                              </a></li>
+                             <li><a href="./pages/contribute.html">
+                             Contribute
+                             </a></li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="implementation-options">
@@ -83,12 +86,13 @@ baSSHtion            </a>
         <div class="col-sm-9">
 
     <section id="content" class="body">
-        <h1 class="entry-title">Securely administer server via <span class="caps">SSH</span></h1>
+        <h1 class="entry-title">Securely administer multiple server via <span class="caps">SSH</span></h1>
         
         <div class="entry-content">
             <p>The basic question answered by baSSHtion.org&nbsp;is:</p>
-<p><strong>How can an operator/administrator securely manage backend servers not directly exposed to the&nbsp;internet?</strong></p>
-<p>Often machines running in private nets need to be administered from the internet. The hypothetical example used here is a moderate complex application running on the internet. This application has a webserver facing to the internet, and a database server plus application servers as backend systems. These machines are administered via <span class="caps">SSH</span>. For security reasons it is undesirable to expose the backend systems to the&nbsp;internet. </p>
+<p><strong>How can an operator/administrator securely manage backend server through the&nbsp;internet?</strong></p>
+<p>Often machines running in private nets need to be administered from the internet. The hypothetical example used here is a moderate complex application running on the internet. This application has a webserver facing to the internet, a database server, and an application server as backend systems. These machines are administered via <span class="caps">SSH</span>. For security reasons it is undesirable to expose the backend systems to the&nbsp;internet. </p>
+<p>SSHv1 is completely out of scope, because is has severe securityissues. Only SSHv2 options are considered. The <span class="caps">SSH</span> implementation used in the exapmles is <a href="http://www.openssh.com/">OpenSSH</a>.</p>
 <p>Several solutions to this problem statement are dicussed&nbsp;here.</p>
 <p><img alt="Setup used for examples." src="./images/Overview.png" /></p>
 <p>Managing such a setup relies on (at least) two roles: <em>Application Operators</em> (short: <em>operator</em>) that manage the applications on the backend systems (but do not manage the operating system), and <em>System Administrators</em> (short: <em>administrator</em>) that manage the operating system (including user management, and <span class="caps">SSH</span>). System Administrators have access to the role of <code>root</code>, whereas operators don&#8217;t have this role. Distinguishing between these roles allows for a better reasoning in terms of access control, even if these roles are often carried out by the same&nbsp;person.</p>
@@ -96,8 +100,8 @@ baSSHtion            </a>
 <p>These are the basic requirements that each of the solutions is evaluated&nbsp;against:</p>
 <ul>
 <li><strong><span class="caps">REQ</span> 1: <em>Secured to the end</em></strong> The whole connection from the operators system (internet) to the backend system must be secured via <span class="caps">SSH</span>.</li>
-<li><strong><span class="caps">REQ</span> 2: <em>no escape for operators</em></strong> Operators must not be able to break out of the system (whereas system administrators might be able t do so). What <em>breaking out</em> means depends on the solution but it basically means, that the operator has to follow the rules set by the system&nbsp;administrator.</li>
-<li><strong><span class="caps">REQ</span> 3: <em>Bastion Host</em></strong> Only one host shout be exposed to the internet (<em>bastion host</em>). This is the core means to prevent internet access to the backend&nbsp;systems.</li>
+<li><strong><span class="caps">REQ</span> 2: <em>no escape for operators</em></strong> Operators must not be able to break out of the system (whereas system administrators might be able to do so). What <em>breaking out</em> means depends on the solution but it basically means, that the operator has to follow the rules set by the system&nbsp;administrator.</li>
+<li><strong><span class="caps">REQ</span> 3: <em>Bastion Host</em></strong> Only one host shout be exposed to the internet (the <em>bastion host</em>). This is the core means to prevent internet access to the backend&nbsp;systems.</li>
 </ul>
 <h2>Solutions</h2>
 <p>There exist several possibilities to allow operators to access the backend systems. Some of the more popular solutions&nbsp;are:</p>
@@ -122,7 +126,7 @@ baSSHtion            </a>
 <h2>Wording</h2>
 <ul>
 <li><strong>Administrator</strong> : The role responsible for managing the access control system (and the operating system). Can add/delete users on all systems. Has <code>root</code> access to all&nbsp;machines.</li>
-<li><strong>Operator</strong> : A user responsible for managing the application. Has accounts on the backend systems, potentially even <code>root</code>.  An operator <em>might</em> have accounts on the bastion host, but never with <code>root</code> level&nbsp;access.</li>
+<li><strong>Operator</strong> : A user responsible for managing the application. Has accounts on the backend systems, but not <code>root</code>.  An operator <em>might</em> have accounts on the bastion host, but never with <code>root</code> level&nbsp;access.</li>
 <li><strong><span class="caps">SSH</span></strong> : The OpenSSH tools (client/server) or protocol. SSHv1 is not&nbsp;considered.</li>
 <li><strong><code>ssh</code></strong> : The OpenSSH <span class="caps">SSH</span>&nbsp;client.</li>
 </ul>
@@ -147,13 +151,13 @@ baSSHtion            </a>
                 <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="./tag/about.html">
-                                about
+                            <a href="./tag/overview.html">
+                                overview
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="./tag/overview.html">
-                                overview
+                            <a href="./tag/about.html">
+                                about
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -167,8 +171,13 @@ baSSHtion            </a>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/proxycommand.html">
-                                ProxyCommand
+                            <a href="./tag/others.html">
+                                others
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/dnat.html">
+                                dnat
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -177,13 +186,8 @@ baSSHtion            </a>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/others.html">
-                                others
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="./tag/dnat.html">
-                                dnat
+                            <a href="./tag/proxycommand.html">
+                                ProxyCommand
                             </a>
                         </li>
                     </ul>
