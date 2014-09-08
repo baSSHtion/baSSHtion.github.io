@@ -2,24 +2,14 @@ Title: DNAT
 Date: 2014-08-23 22:20
 Modified: 2014-08-24 23:15
 Category: Implementation Options
-Tags: about, overview, dnat, firewall
+Tags:  dnat, firewall
 Slug: dnat
 Authors: Jens Neuhalfen
 Summary: Using the firewall to access backend systems via DNAT.
 SortOrder: 20
 
-**WORK IN PROGRESS**
+A possibility to give operators SSH access to backed systems is to use Port *DNAT*. With Port DNAT, a host exposed to the internet [DNATs](http://en.wikipedia.org/wiki/Network_address_translation#DNAT) some of its ports to the backed systems. E.g. `public-ip:2224` is forwarded to `db-server:22`, and `public-ip:2222` is forwarded to `app-server:22`. To access the DB server the operator points ssh to the public ip, e.g. `ssh public-ip -p2224`.
 
-Solutions in detail
-====================
-
-In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great deal.
-
-An evaluation of each of the requirements stated is given, and summarized in the result
-
-- _fully_ fulfills the requirement,
-- _partially_ fulfills the requirement
-- _no_ or inadequate fulfillment of the requirement
 
 ## Port DNAT
 
@@ -58,15 +48,61 @@ ssh public-ip -p2224
 New users are only added to the backend systems.
 
 ### Evaluation
-| Requirement                                    | requirement fulfilled | comment |
-|------------------------------------------------|---------|-----------------------------------------------------------------------------------------|
-| *REQ 1: Bastion Host*                           | partially | The firewall reduces the attack surface of the backend systems to the ssh port.      |
-| *REQ 2: Auditable*                              | no      | Only SSH encrypted traffic passes through the firewall, preventing an audit of the content.|
-| *REQ 3: Fine grained permissions*               | no      | The firewall can only restrict communication to specific source/destination addresses. |
-| *REQ 4: Robustness*                             | fully   | Changes are limited to one system, making them very robust to carry out.               |
-| *REQ 5: Four eyes principle for usermanagement*  | no     | Anybody who can manage users on a backend system can do so alone. Anyone who can administer the firewall can add/remove hosts. |
-| *REQ 6: Port forwarding*  | | |
-| *REQ 7: scp*  | | |
+
+An evaluation of each of the requirements stated is given, and summarized in the result
+
+- _fully_ fulfills the requirement,
+- _partially_ fulfills the requirement
+- _no_ or inadequate fulfillment of the requirement
+
+####  **REQ 1:** From the internet to the backend
+_An operator can access the backend system from the internet (via ssh)._
+
+The  solution  _fully_  fulfills the requirement. In the example above, the database server is made available to the operator.
+
+####  **REQ 2:** Secured to the end 
+_The whole connection from the operators system (internet) to the backend system must be secured via SSH._
+
+The  solution  _fully_  fulfills the requirement. In the example above, the database server is accessed by a direct ssh connection.
+
+####  **REQ 3:** no escape for operators 
+_Operators must not be able to break out of the system (whereas system administrators might be able to do so)._
+
+This solution does not allow ssh specific restrictions on the firewall. The only restriction is, which hosts are made available to the internet. The  solution  _fully_  fulfills the requirement. 
+####  **REQ 4:**Bastion Host
+_Only one host shout be exposed to the internet (the *bastion host*)._
+
+The  solution  provides _no_  solution to this requirement. In the example above, the database server is directly made available to any one on the internet.
+
+#### **REQ 5:** Fine grained permissions
+_Certain options should be configurable on the bastion host on a per user and system base (e.g. allow `scp`, `sftp`, or `port forwarding` for user X to system Y)._
+
+The  solution  provides _no_  solution to this requirement, the connection is directly made to the backend systems.
+
+####  **REQ 6:** Robustnes
+_Configuration and management should be robust. It should be easy for the administrator to execute a given task (e.g. create new user, add a new backend system) but difficult to bring the system in an inconsitent state._
+
+The  solution  _fully_  fulfills the requirement. Only a single system (the firewall) needs to be modified.
+
+####  **REQ 7:** Four eyes principle for usermanagement
+_It should be impossible for the administrator of a single system to grant a new operator/administrator access from the internet._
+
+The  solution  provides _no_  solution to this requirement. Once the backend system is exposed to the internat, an operator on the backend system can give new users access.
+
+####  **REQ 8:**  Port forwarding from the client
+_The operator should be able to use SSH port forwarding from his workstation to the backend systems._
+
+The  solution  _fully_  fulfills the requirement. In the example above, the database server is accessed by a direct ssh connection.
+
+####  **REQ 9:** scp to the backend
+_The operator should be able to use scp from his workstation to the backend systems._
+
+The  solution  _fully_  fulfills the requirement. In the example above, the database server is accessed by a direct ssh connection.
+
+####  **REQ 10:** Auditable
+_All communication must be monitored in such a way that a forensic analysis is possible at a later time (audit)_
+
+The  solution  provides _no_  solution to this requirement. In the best case, the firewall logs can be used to determine, which ip addresses have accessed the backend systems from the internet.
 
 ### Conclusion
 #### Strengths

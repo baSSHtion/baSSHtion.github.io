@@ -47,17 +47,6 @@ Replaying the recorded session:
 #### Adding a new backend host
 #### Adding a new user
 ### Evaluation
-| Requirement                                     | requirement fulfilled | comment |
-|-------------------------------------------------|-----------|-----------------------------------------------------------------------------------------|
-| *REQ 1: Bastion Host*                           | partially |                                                                                         |
-| *REQ 2: Auditable*                              | no        |                                                                                         |
-| *REQ 3: Fine grained permissions*               |           |                                                                                         |
-| *REQ 4: Robustness*                             |           |                                                                                         |
-| *REQ 5: Four eyes principle for usermanagement* |           |                                                                                         |
-| *REQ 6: Port forwarding*  | | |
-| *REQ 7: scp*  | | |
-
-
 ## Conclusion
 #### Strengths
 #### Weaknesses

@@ -53,7 +53,7 @@ Extended Requirements
 
 When the system gets larger, and/or handles sensitive data, additional requiremens emerge:
 
-- **REQ 5: _Fine grained permissions_** Certain options should be configurable on a per user and system base (e.g. allow `scp`, `sftp`, or `port forwarding` for user X to system Y).
+- **REQ 5: _Fine grained permissions_** Certain options should be configurable on the bastion host on a per user and system base (e.g. allow `scp`, `sftp`, or `port forwarding` for user X to system Y).
 - **REQ 6: _Robustness_** Configuration and management should be robust. It should be easy for the administrator to execute a given task (e.g. create new user, add a new backend system) but difficult to bring the system in an inconsitent state.
 - **REQ 7: _Four eyes principle for usermanagement_** It should be impossible for the administrator of a single system to grant a new operator/administrator access from the internet.
 - **REQ 8: _Port forwarding from the client_** The operator should be able to use SSH port forwarding from his workstation to the backend systems.
@@ -67,8 +67,6 @@ Wording
 * **Operator** : A user responsible for managing the application. Has accounts on the backend systems, but not `root`.  An operator *might* have accounts on the bastion host, but never with `root` level access.
 * **SSH** : The OpenSSH tools (client/server) or protocol. SSHv1 is not considered.
 * **`ssh`** : The OpenSSH SSH client.
-
-
 
 # Ressources
 * [RFC 4251: SSH architecture](http://datatracker.ietf.org/doc/rfc4251/?include_text=1)
