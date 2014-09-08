@@ -17,22 +17,23 @@ The basic question answered by baSSHtion.org is:
 
 Often machines running in private nets need to be administered from the internet. The hypothetical example used here is a moderate complex application running on the internet. This application has a webserver facing to the internet, a database server, and an application server as backend systems. These machines are administered via SSH. For security reasons it is undesirable to expose the backend systems to the internet. 
 
-SSHv1 is completely out of scope, because is has severe securityissues. Only SSHv2 options are considered. The SSH implementation used in the exapmles is [OpenSSH](http://www.openssh.com/).
-
-Several solutions to this problem statement are dicussed here.
+SSHv1 is completely out of scope, because is has severe security issues. Only SSHv2 options are considered. The SSH implementation used in the exapmles is [OpenSSH](http://www.openssh.com/), YMMV for other implementations.
 
 ![Setup used for examples.]({filename}/images/Overview.png)
 
-Managing such a setup relies on (at least) two roles: _Application Operators_ (short: _operator_) that manage the applications on the backend systems (but do not manage the operating system), and _System Administrators_ (short: _administrator_) that manage the operating system (including user management, and SSH). System Administrators have access to the role of `root`, whereas operators don't have this role. Distinguishing between these roles allows for a better reasoning in terms of access control, even if these roles are often carried out by the same person.
+Managing such a setup relies on (at least) two roles: _Application Operators_ (short: _operator_) that manage the applications on the backend systems (but do not manage the operating system), and _System Administrators_ (short: _administrator_) that manage the operating system (including user management, and SSH). System administrators have access to the role of `root`, whereas operators don't have this role. Distinguishing between these roles allows for a better reasoning in terms of access control, even if these roles are often carried out by the same person.
+
+Several solutions to this problem statement are dicussed here.
 
 Basic Requirements
 ----------------------
 
 These are the basic requirements that each of the solutions is evaluated against:
 
-- **REQ 1: _Secured to the end_** The whole connection from the operators system (internet) to the backend system must be secured via SSH.
-- **REQ 2: _no escape for operators_** Operators must not be able to break out of the system (whereas system administrators might be able to do so). What _breaking out_ means depends on the solution but it basically means, that the operator has to follow the rules set by the system administrator.
-- **REQ 3: _Bastion Host_** Only one host shout be exposed to the internet (the _bastion host_). This is the core means to prevent internet access to the backend systems.
+- **REQ 1: _From the internet to the backend_** An operator can access the backend system from the internet (via ssh).
+- **REQ 2: _Secured to the end_** The whole connection from the operators system (internet) to the backend system must be secured via SSH.
+- **REQ 3: _no escape for operators_** Operators must not be able to break out of the system (whereas system administrators might be able to do so). What _breaking out_ means depends on the solution but it basically means, that the operator has to follow the rules set by the system administrator.
+- **REQ 4: _Bastion Host_** Only one host shout be exposed to the internet (the _bastion host_). This is the core means to prevent any host on the internet to directly access the backend systems.
 
 Solutions
 ----------------------
@@ -45,19 +46,19 @@ There exist several possibilities to allow operators to access the backend syste
 4. [*Jump Host without interactive session*]({filename}/JumpHostNonInteractive.md), as above but without an interactive session (shell) on the bastion host. When system administrators connect to this host a new SSH connection to the next host is automatically opened via a _forced command_. Authentication on the backend hosts is done via agent forwarding. E.g. `ssh -A public-ip app-server`.
 5. [*Other solutions*]({filename}/others.md)
 
-All of these solutions fulfil the requirement of a single exposed host, though in practice additional requirements are identified.
+All of these solutions 1-4 fulfil the requirement of a single exposed host, though in practice additional requirements are identified.
 
 Extended Requirements
 ----------------------
 
 When the system gets larger, and/or handles sensitive data, additional requiremens emerge:
 
-- **REQ 4: _Auditable_** All communication must be monitored in such a way that a forensic analysis is possible at a later time (audit)
 - **REQ 5: _Fine grained permissions_** Certain options should be configurable on a per user and system base (e.g. allow `scp`, `sftp`, or `port forwarding` for user X to system Y).
 - **REQ 6: _Robustness_** Configuration and management should be robust. It should be easy for the administrator to execute a given task (e.g. create new user, add a new backend system) but difficult to bring the system in an inconsitent state.
 - **REQ 7: _Four eyes principle for usermanagement_** It should be impossible for the administrator of a single system to grant a new operator/administrator access from the internet.
 - **REQ 8: _Port forwarding from the client_** The operator should be able to use SSH port forwarding from his workstation to the backend systems.
 - **REQ 9: _scp to the backend_** The operator should be able to use scp from his workstation to the backend systems.
+- **REQ 10: _Auditable_** All communication must be monitored in such a way that a forensic analysis is possible at a later time (audit)
 
 
 Wording
