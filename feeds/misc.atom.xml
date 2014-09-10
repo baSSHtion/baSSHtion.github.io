@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>baSSHtion</title><link href="http://www.basshtion.org/" rel="alternate"></link><link href="http://www.basshtion.org/feeds/misc.atom.xml" rel="self"></link><id>http://www.basshtion.org/</id><updated>2014-08-24T23:15:00+02:00</updated><entry><title>Others</title><link href="http://www.basshtion.org/others.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:others.html</id><summary type="html">&lt;h2&gt;&lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;Misc&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;a PoC of a &lt;a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack"&gt;transparent proxy&lt;/a&gt; that implements a &lt;a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack"&gt;Man in the Middle Attack&lt;/a&gt; on &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;connections.&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;TODO&lt;/span&gt;: Die geklauten ssh&amp;nbsp;keys&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Large(r)&amp;nbsp;Installations&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://TODO"&gt;mussh&lt;/a&gt; provides the means to run a command in parallel on multiple&amp;nbsp;machines.&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://TODO"&gt;Chef&lt;/a&gt;, &lt;a href="http://TODO"&gt;Puppet&lt;/a&gt;, &lt;a href="http://TODO"&gt;salt&lt;/a&gt;, and others are usefull to configure large infrastructure&amp;nbsp;setups.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Products&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.openssh.com/"&gt;OpenSSH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="others"></category></entry></feed>

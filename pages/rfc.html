@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>SSHv2&nbsp;internals - baSSHtion</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="http://www.basshtion.org/pages/rfc.html">
+
+        <meta name="author" content="Jens Neuhalfen" />
+        <meta name="description" content="A condensed version of the RFCs that specify SSHv2." />
+
+    <meta property="og:site_name" content="baSSHtion" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="SSHv2 internals"/>
+    <meta property="og:url" content="http://www.basshtion.org/pages/rfc.html"/>
+    <meta property="og:description" content="A condensed version of the RFCs that specify SSHv2." />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://www.basshtion.org/theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
+    <link href="http://www.basshtion.org/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://www.basshtion.org/theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="http://www.basshtion.org/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.basshtion.org/theme/css/style.css" type="text/css"/>
+        <link href="http://www.basshtion.org/static/custom.css" rel="stylesheet">
+
+        <link href="http://www.basshtion.org/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="baSSHtion ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://www.basshtion.org/" class="navbar-brand">
+baSSHtion            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                             <li><a href="http://www.basshtion.org/pages/why.html">
+                             Why?
+                             </a></li>
+                             <li><a href="http://www.basshtion.org/pages/contribute.html">
+                             Contribute
+                             </a></li>
+                             <li class="active"><a href="http://www.basshtion.org/pages/rfc.html">
+                             SSHv2&nbsp;internals
+                             </a></li>
+                        <li class="dropdown">
+                                      <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
+                              <ul class="dropdown-menu" aria-labelledby="implementation-options">
+                                                <li><a href="http://www.basshtion.org/dnat.html"><span class="caps">DNAT</span></a></li>
+                                                <li><a href="http://www.basshtion.org/proxy_command.html">ProxyCommand</a></li>
+                                                <li><a href="http://www.basshtion.org/jump_host_interactive.html">JumpHost/interactive</a></li>
+                                                <li><a href="http://www.basshtion.org/jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
+                              </ul>
+                            </li>
+                        </li>
+                        <li class="dropdown">
+                                      <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="misc">Misc <span class="caret"></span></a>
+                              <ul class="dropdown-menu" aria-labelledby="misc">
+                                                <li><a href="http://www.basshtion.org/others.html">Others</a></li>
+                              </ul>
+                            </li>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://www.basshtion.org/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content" class="body">
+        <h1 class="entry-title">SSHv2&nbsp;internals</h1>
+        
+        <div class="entry-content">
+            <p>The following paragraphs provide a condensed version of the RFCs that specify&nbsp;SSHv2.</p>
+<p>A good definition of what <span class="caps">SSH</span> is comes from the <em><span class="caps">SSH</span> Protocol Architecture</em> <a href="http://datatracker.ietf.org/doc/rfc4251/?include_text-1"><span class="caps">RFC4251</span></a> (which is a good read to get an overview of&nbsp;SSHv2):</p>
+<blockquote>
+<p>Secure Shell (<span class="caps">SSH</span>) is a protocol for secure remote login and other
+  secure network services over an insecure network.  It consists of
+  three major&nbsp;components:</p>
+<p>o  The Transport Layer Protocol [<span class="caps">SSH</span>-<span class="caps">TRANS</span>] provides server
+     authentication, confidentiality, and integrity.  It may optionally
+     also provide compression.  The transport layer will typically be
+     run over a <span class="caps">TCP</span>/<span class="caps">IP</span> connection, but might also be used on top of any
+     other reliable data&nbsp;stream.</p>
+<p>o  The User Authentication Protocol [<span class="caps">SSH</span>-<span class="caps">USERAUTH</span>] authenticates the
+     client-side user to the server.  It runs over the transport layer&nbsp;protocol.</p>
+<p>o  The Connection Protocol [<span class="caps">SSH</span>-<span class="caps">CONNECT</span>] multiplexes the encrypted
+     tunnel into several logical channels.  It runs over the user
+     authentication&nbsp;protocol.</p>
+<p>The client sends a service request once a secure transport layer
+  connection has been established.  A second service request is sent
+  after user authentication is complete.  This allows new protocols to
+  be defined and coexist with the protocols listed&nbsp;above.</p>
+</blockquote>
+<p>Graphically the architecture of <span class="caps">SSH</span> can be visualized as&nbsp;follows.</p>
+<div class="highlight"><pre><span class="cp">### : SSH-CONNECT SSH connection protocol, RFC4254</span>
+<span class="o">+++</span> <span class="o">:</span> <span class="n">SSH</span><span class="o">-</span><span class="n">USERAUTH</span> <span class="n">User</span> <span class="n">authentication</span><span class="p">,</span> <span class="n">RFC4252</span>
+<span class="o">===</span> <span class="o">:</span> <span class="n">SSH</span><span class="o">-</span><span class="n">TRANS</span> <span class="n">Transport</span> <span class="n">layer</span><span class="p">,</span> <span class="n">RFC4253</span>
+
+
+      <span class="err">####</span> <span class="n">SSH</span><span class="o">-</span><span class="n">CONNECT</span> <span class="err">#########</span> <span class="n">Channel</span> <span class="mi">1</span> <span class="s">&quot;session&quot;</span> <span class="err">###########</span> <span class="p">(</span><span class="n">the</span> <span class="n">channel</span> <span class="n">id</span> <span class="n">is</span> <span class="n">arbitrary</span><span class="p">)</span>
+      <span class="err">####</span> <span class="n">SSH</span><span class="o">-</span><span class="n">CONNECT</span> <span class="err">#########</span> <span class="n">Channel</span> <span class="mi">2</span> <span class="s">&quot;tcpip-forward&quot;</span> <span class="err">#####</span> <span class="p">(</span>              <span class="err">&#39;&#39;</span>           <span class="p">)</span>
+               <span class="p">....</span>
+      <span class="err">####</span> <span class="n">SSH</span><span class="o">-</span><span class="n">CONNECT</span> <span class="err">#########</span> <span class="n">Channel</span> <span class="n">n</span> <span class="s">&quot;...&quot;</span> <span class="err">###############</span> <span class="p">(</span>              <span class="err">&#39;&#39;</span>           <span class="p">)</span>
+
+    <span class="o">++++++++++++++++</span> <span class="n">SSH</span><span class="o">-</span><span class="n">USERAUTH</span> <span class="o">++++++++++++++++++++++++++++++++++</span>   <span class="p">(</span><span class="n">User</span> <span class="n">authentication</span><span class="p">)</span>
+
+<span class="o">=============================</span>  <span class="n">SSH</span><span class="o">-</span><span class="n">TRANS</span> <span class="o">==============================</span> <span class="p">(</span><span class="n">Server</span> <span class="n">authentication</span> <span class="o">&amp;</span> <span class="n">link</span> <span class="n">security</span><span class="p">)</span>
+</pre></div>
+
+
+<p><span class="caps">SSH</span> is designed to be flexible, and modular. The communication between client and server is message based. Algorithms and methods are defined by interfaces (e.g. <a href="http://datatracker.ietf.org/doc/rfc4252/?include_text-1"><span class="caps">USER</span>-<span class="caps">AUTH</span></a>), and identified by string names (see <a href="http://datatracker.ietf.org/doc/rfc4251/?include_text-1">chapter 6</a>). These names are split into e-mail like namespaces &#8220;name@domainname&#8221;, e.g. &#8220;ourcipher-cbc@example.com&#8221; or &#8220;xyz@openssh.com&#8221;. Names defined in RFCs have no suffix&nbsp;(&#8220;3des-cbc&#8221;).</p>
+<h2><span class="caps">SSH</span>-<span class="caps">TRANS</span></h2>
+<p>From the <a href="http://datatracker.ietf.org/doc/rfc4253/?include_text-1"><span class="caps">RFC4253</span></a>:</p>
+<blockquote>
+<p>The <span class="caps">SSH</span> transport layer is a secure, low level transport protocol.
+  It provides strong encryption, cryptographic host authentication, and
+  integrity&nbsp;protection.</p>
+<p>Authentication in this protocol level is host-based; this protocol
+  does not perform user authentication.  A higher level protocol for
+  user authentication can be designed on top of this&nbsp;protocol.</p>
+<p>The protocol has been designed to be simple and flexible to allow
+  parameter negotiation, and to minimize the number of round-trips.
+  The key exchange method, public key algorithm, symmetric encryption
+  algorithm, message authentication algorithm, and hash algorithm are
+  all negotiated.  It is expected that in most environments, only 2
+  round-trips will be needed for full key exchange, server
+  authentication, service request, and acceptance notification of
+  service request.  The worst case is 3&nbsp;round-trips.</p>
+</blockquote>
+<p>In summary the connection starts with the <em>Protocol Version Exchange</em> where the server announces its version. Then the key exchange (server keys, not user keys) takes&nbsp;place.</p>
+<p>After the key exchange the to be used algorithms are negotiated and the client requests a service by its&nbsp;name.</p>
+<p>The <span class="caps">RFC</span> defines two services for the transport&nbsp;protocol:</p>
+<ul>
+<li><code>ssh-userauth</code>  - A summary of <a href="http://datatracker.ietf.org/doc/rfc4252/?include_text-1"><span class="caps">RFC4252</span></a> follows in the next&nbsp;section.</li>
+<li><code>ssh-connection</code> - A summary of <a href="http://datatracker.ietf.org/doc/rfc4254/?include_text-1"><span class="caps">RFC4254</span></a> is found further&nbsp;below.</li>
+</ul>
+<h2><span class="caps">SSH</span>-<span class="caps">USERAUTH</span></h2>
+<p>Cited from <a href="http://datatracker.ietf.org/doc/rfc4252/?include_text-1"><span class="caps">RFC4252</span></a>:</p>
+<blockquote>
+<p>The <span class="caps">SSH</span> authentication protocol is a general-purpose user
+  authentication protocol.  It is intended to be run over the <span class="caps">SSH</span>
+  transport layer protocol [<span class="caps">SSH</span>-<span class="caps">TRANS</span>].  This protocol assumes that the
+  underlying protocols provide integrity and confidentiality&nbsp;protection.</p>
+<p>[&#8230;]</p>
+<p>The &#8216;service name&#8217; for this protocol is&nbsp;&#8220;ssh-userauth&#8221;.</p>
+<p>When this protocol starts, it receives the session identifier from
+  the lower-level protocol (this is the exchange hash H from the first
+  key exchange).  The session identifier uniquely identifies this
+  session and is suitable for signing in order to prove ownership of a
+  private key.  This protocol also needs to know whether the lower-
+  level protocol provides confidentiality&nbsp;protection.</p>
+</blockquote>
+<p>User authentication starts ith the client sending a request to authenticate with the <code>none</code> method. The server replies with a list of the allowed authentication methods (e.g. <code>publickey,password</code>). The user is free to choose any of the offered methods to authenticate. The server may require several authentication methods in succession (&#8216;partial success&#8217;), e.g.  first a valid publickey authentication, followed by a one time password authentication with a hardware&nbsp;token.</p>
+<h3>Example Message Exchange for Password&nbsp;Authentication</h3>
+<p>This is a message exchange of the user <code>admin</code> authenticating with <code>password</code> authentication for the usage of an interactive&nbsp;terminal:</p>
+<div class="highlight"><pre>Client                                           Server
+
+   <span class="o">|</span>                                                <span class="o">|</span>
+   <span class="o">|</span> <span class="o">&gt;------------</span> SSH_MSG_USERAUTH_REQUEST <span class="o">------&gt;</span> <span class="o">|</span>
+   <span class="o">|</span>         user name<span class="o">:</span>    <span class="s">&quot;admin&quot;</span>                  <span class="o">|</span>
+   <span class="o">|</span>         service name<span class="o">:</span> <span class="s">&quot;session&quot;</span>                <span class="o">|</span>
+   <span class="o">|</span>         method<span class="o">-</span>name<span class="o">:</span>  <span class="s">&quot;none&quot;</span>                   <span class="o">|</span>
+   <span class="o">|</span>                                                <span class="o">|</span>
+   <span class="o">|</span> <span class="o">&lt;-------------</span> SSH_MSG_USERAUTH_FAILURE <span class="o">-----&lt;</span> <span class="o">|</span>
+   <span class="o">|</span>         name list<span class="o">:</span>    <span class="s">&quot;publickey,password&quot;</span>     <span class="o">|</span>
+   <span class="o">|</span>         partial success<span class="o">:</span> <span class="kc">FALSE</span>                 <span class="o">|</span>
+   <span class="o">|</span>                                                <span class="o">|</span>
+   <span class="o">|</span> <span class="o">&gt;------------</span> SSH_MSG_USERAUTH_REQUEST <span class="o">------&gt;</span> <span class="o">|</span>
+   <span class="o">|</span>         user name<span class="o">:</span>    <span class="s">&quot;admin&quot;</span>                  <span class="o">|</span>
+   <span class="o">|</span>         service name<span class="o">:</span> <span class="s">&quot;session&quot;</span>                <span class="o">|</span>
+   <span class="o">|</span>         method<span class="o">-</span>name<span class="o">:</span>  <span class="s">&quot;password&quot;</span>               <span class="o">|</span>
+   <span class="o">|</span>         change<span class="o">-</span>passwd<span class="o">:</span> <span class="kc">FALSE</span>                   <span class="o">|</span>
+   <span class="o">|</span>         password<span class="o">:</span>     <span class="s">&quot;s3cr3t&quot;</span>                 <span class="o">|</span>
+   <span class="o">|</span>                                                <span class="o">|</span>
+   <span class="o">|</span> <span class="o">&lt;-------------</span> SSH_MSG_USERAUTH_SUCCESS <span class="o">-----&lt;</span> <span class="o">|</span>
+   <span class="o">|</span>                                                <span class="o">|</span>
+
+       <span class="p">(</span> the user is now authenticated<span class="p">)</span>
+</pre></div>
+
+
+<h2><span class="caps">SSH</span>-<span class="caps">CONNECT</span></h2>
+<p>Cited from <a href="http://datatracker.ietf.org/doc/rfc4254/?include_text-1"><span class="caps">RFC4254</span></a>:</p>
+<blockquote>
+<p>The <span class="caps">SSH</span> Connection Protocol has been designed to run on top of the
+  <span class="caps">SSH</span> transport layer and user authentication protocols ([<span class="caps">SSH</span>-<span class="caps">TRANS</span>]
+  and [<span class="caps">SSH</span>-<span class="caps">USERAUTH</span>]).  It provides interactive login sessions, remote
+  execution of commands, forwarded <span class="caps">TCP</span>/<span class="caps">IP</span> connections, and forwarded
+  X11&nbsp;connections.</p>
+<p>The &#8216;service name&#8217; for this protocol is&nbsp;&#8220;ssh-connection&#8221;.</p>
+</blockquote>
+<h3>Global&nbsp;Requests</h3>
+<p>Global requests are independent of channels (see below), and allow for example to initialize port forwarding (see section 7 of the <span class="caps">RFC</span>).</p>
+<h3>Channels</h3>
+<p>The connection protocol multiplexes several logical connections (<em>channel</em>) over the tranport connection. Both the client, and the server can open a channel via <code>SSH_MSG_CHANNEL_OPEN</code> requests.</p>
+<p>A <code>SSH_MSG_CHANNEL_OPEN</code> request is subtyped by a string name (analogous to the names in user authentication). Both ends of a channel identify the channel by a numeric channel id. These ids can differ between sender and receiver. Channel ids are sometimes shown in ssh debug&nbsp;messages.</p>
+<p>Once a channel has been opened, requests (<code>SSH_MSG_CHANNEL_REQUEST</code>) can be sent to the other side of the channel. This could, for example, be the request to open a pty for an interactive&nbsp;session.</p>
+<p>Data transfer for a session is done using <code>SSH_MSG_CHANNEL_DATA</code> and <code>SSH_MSG_CHANNEL_EXTENDED_DATA</code> requests. The extended data type <code>SSH_EXTENDED_DATA_STDERR</code> has been defined for stderr&nbsp;data.</p>
+<h4>Interactive&nbsp;Session</h4>
+<p>The following mesage exchange shows how a session with a pty is&nbsp;opened:</p>
+<div class="highlight"><pre>Client                                           Server
+   |                                                |
+   | &gt;------------ SSH_MSG_CHANNEL_OPEN ----------&gt; |
+   |         channel name:   &quot;session&quot;              |
+   |         sender channel: 42                     |
+   |                                                |
+   | &lt;------------- SSH_MSG_CHANNEL_SUCCESS  -----&lt; |
+   |         recipient channel: 67                  |
+   |                                                |
+
+(the client channel #42 is now connected to the server channel #67)
+
+   | &gt;------------ SSH_MSG_CHANNEL_REQUEST  ------&gt; |
+   |         recipient channel:  67                 |
+   |         request name:      &quot;pty-req&quot;           |
+   |         want reply:         FALSE              |
+   |         TERM:              &quot;xterm-256&quot;         |
+   |         [further params]:  &quot;...&quot;               |
+   |                                                |
+
+     (the client channel #42 now resembles a pty)
+</pre></div>
+
+
+<h4>X11&nbsp;forwarding</h4>
+<p>See section 6.3.2 of the <span class="caps">SSH</span>-<span class="caps">CONNECT</span> <a href="http://datatracker.ietf.org/doc/rfc4254/?include_text-1"><span class="caps">RFC</span></a>.</p>
+<h4>Agent&nbsp;Forwarding</h4>
+<p>The agent forwrding protocol used by OpenSSH is not defined by an <span class="caps">RFC</span>, but by a OpenSSH <a href="http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/PROTOCOL.agent?rev=HEAD">directly</a>.</p>
+<h4>Port&nbsp;forwarding</h4>
+<p>Port forwarding (described in section 7 of the <span class="caps">RFC</span>) allows connections to a local or remote port to be tunnled through a channel. Each forwarding rule is initialized via a <code>SSH_MSG_GLOBAL_REQUEST</code> with the request string &#8220;tcpip-forward&#8221;. <span class="caps">SSH</span> will create a new channel for each tcp connection made. E.g. when a local port is forwarded to a remote system, each tcp connection to this port opens a separate&nbsp;channel.</p>
+<h4>sftp</h4>
+<p><a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol">sftp</a> is implemented as <span class="caps">SSH</span> <em>subsystem</em> that can be startet by sending a <code>SSH_MSG_CHANNEL_REQUEST</code> with the request name &#8220;subsystem&#8221;. The Filezilla project also has a good collection of <a href="https://wiki.filezilla-project.org/SFTP_specifications">references</a>.</p>
+<h4>scp</h4>
+<p>There is no <span class="caps">RFC</span> that defines&nbsp;scp.</p>
+<h1>Ressources</h1>
+<ul>
+<li>http://www.openssh.com/manual.html</li>
+<li><a href="http://datatracker.ietf.org/doc/rfc4251/?include_text-1"><span class="caps">RFC4251</span></a> <span class="caps">SSH</span>-<span class="caps">ARCH</span></li>
+<li><a href="http://datatracker.ietf.org/doc/rfc4252/?include_text-1"><span class="caps">RFC4252</span></a> <span class="caps">USER</span>-<span class="caps">AUTH</span></li>
+<li><a href="http://datatracker.ietf.org/doc/rfc4253/?include_text-1"><span class="caps">RFC4253</span></a> <span class="caps">SSH</span>-<span class="caps">TRANS</span></li>
+<li><a href="http://datatracker.ietf.org/doc/rfc4254/?include_text-1"><span class="caps">RFC4254</span></a> <span class="caps">SSH</span>-<span class="caps">CONNECT</span></li>
+</ul>
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+
+
+
+                <li class="list-group-item"><a href="http://www.basshtion.org/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/jumphost.html">
+                                jumphost
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/interactive.html">
+                                interactive
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/about.html">
+                                about
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/overview.html">
+                                overview
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.basshtion.org/tag/firewall.html">
+                                firewall
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.basshtion.org/tag/others.html">
+                                others
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.basshtion.org/tag/dnat.html">
+                                dnat
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.basshtion.org/tag/proxycommand.html">
+                                ProxyCommand
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://www.openssh.com/" target="_blank">
+                OpenSSH.com
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/baSSHtion/" target="_blank">
+                baSSHtion on GitHub
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Jens Neuhalfen
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://www.basshtion.org/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://www.basshtion.org/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://www.basshtion.org/theme/js/respond.min.js"></script>
+
+</body>
+</html>

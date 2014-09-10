@@ -10,23 +10,25 @@
 
 
 
-<link rel="canonical" href="./proxy_command.html">
+<link rel="canonical" href="http://www.basshtion.org/proxy_command.html">
 
         <meta name="author" content="Jens Neuhalfen" />
-        <meta name="keywords" content="about,overview,ProxyCommand" />
+        <meta name="keywords" content="ProxyCommand" />
         <meta name="description" content="The SSH ProxyCommand is a configuration that tells the SSH client how to make the connection to the SSH server." />
 
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="./theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
-    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://www.basshtion.org/theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
+    <link href="http://www.basshtion.org/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="./theme/css/pygments/solarizeddark.css" rel="stylesheet">
-        <link href="./theme/css/typogrify.css" rel="stylesheet">
-    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
-        <link href="./static/custom.css" rel="stylesheet">
+    <link href="http://www.basshtion.org/theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="http://www.basshtion.org/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.basshtion.org/theme/css/style.css" type="text/css"/>
+        <link href="http://www.basshtion.org/static/custom.css" rel="stylesheet">
 
+        <link href="http://www.basshtion.org/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="baSSHtion ATOM Feed"/>
 
 </head>
 <body>
@@ -40,37 +42,40 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="./" class="navbar-brand">
+            <a href="http://www.basshtion.org/" class="navbar-brand">
 baSSHtion            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                             <li><a href="./pages/why.html">
+                             <li><a href="http://www.basshtion.org/pages/why.html">
                              Why?
                              </a></li>
-                             <li><a href="./pages/contribute.html">
+                             <li><a href="http://www.basshtion.org/pages/contribute.html">
                              Contribute
+                             </a></li>
+                             <li><a href="http://www.basshtion.org/pages/rfc.html">
+                             SSHv2&nbsp;internals
                              </a></li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="implementation-options">
-                                                <li><a href="./dnat.html"><span class="caps">DNAT</span></a></li>
-                                                <li><a href="./proxy_command.html">ProxyCommand</a></li>
-                                                <li><a href="./jump_host_interactive.html">JumpHost/interactive</a></li>
-                                                <li><a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
+                                                <li><a href="http://www.basshtion.org/dnat.html"><span class="caps">DNAT</span></a></li>
+                                                <li><a href="http://www.basshtion.org/proxy_command.html">ProxyCommand</a></li>
+                                                <li><a href="http://www.basshtion.org/jump_host_interactive.html">JumpHost/interactive</a></li>
+                                                <li><a href="http://www.basshtion.org/jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
                               </ul>
                             </li>
                         </li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="misc">Misc <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="misc">
-                                                <li><a href="./others.html">Others</a></li>
+                                                <li><a href="http://www.basshtion.org/others.html">Others</a></li>
                               </ul>
                             </li>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+                <li><a href="http://www.basshtion.org/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -85,7 +90,7 @@ baSSHtion            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="./proxy_command.html"
+                    <a href="http://www.basshtion.org/proxy_command.html"
                        rel="bookmark"
                        title="Permalink to ProxyCommand">
                         ProxyCommand
@@ -93,7 +98,109 @@ baSSHtion            </a>
                 </h1>
             </header>
             <div class="entry-content">
-                <p><strong><span class="caps">WORK</span> <span class="caps">IN</span> <span class="caps">PROGRESS</span></strong></p>
+                <p>A built in solutions to implement a bastion host is the <em>ProxyCommand</em> command of OpenSSH. The proxy command tells the <code>ssh</code> client how to connect to the ssh server. E.g. <code>ssh public-ip -o ProxyCommand "nc db-server 22"</code> would ssh to the public-ip. There it would execute netcat, and then try to connect from the client, <em>through</em> the ssh to public-ip,  <em>through</em> the netcat pipe and to the db-server to establish the final ssh&nbsp;connection.</p>
+<p><img alt="" src="http://www.basshtion.org/images/ProxyCommand.png" /></p>
+<h3>Example&nbsp;implementation</h3>
+<p>Setting up ProxyCommand is straight forward and requires an <span class="caps">SSH</span> server exposed to the internet (the bastion&nbsp;host). </p>
+<p>An ssh server exposed to the internet should never, ever have other authentication means beside public key authentication enabled. Not only is this much more secure, it also allows a fine grained access control via <code>forced-command</code>s. </p>
+<p>The users on the bastion host have the sole responsibility to execute netcat (<code>nc</code>) to the backend&nbsp;systems. </p>
+<p>These very restricted permissions of users allows the usage of a technical user account on the bastion host. Using a single, restricted user has the advantage, that this user can be locked down very easy, e.g. by creating a changeroot with only netcat&nbsp;installed.</p>
+<p>The example implementation is a script on the bastion host that is run as ssh forced command. Operators connect to backend systems like&nbsp;this:</p>
+<div class="highlight"><pre><span class="cp"># ~/.ssh/config</span>
+
+<span class="n">Host</span> <span class="n">app</span><span class="o">-</span><span class="n">server</span><span class="p">.</span><span class="n">proxy</span>
+     <span class="n">User</span> <span class="n">admin</span>
+     <span class="n">ProxyCommand</span>    <span class="n">ssh</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">l</span> <span class="n">sshgw</span> <span class="n">bastion</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">org</span> <span class="n">app</span><span class="o">-</span><span class="n">server</span>
+
+<span class="n">Host</span> <span class="n">db</span><span class="p">.</span><span class="n">proxy</span>
+     <span class="n">User</span> <span class="n">admin</span>
+     <span class="n">ProxyCommand</span>    <span class="n">ssh</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="n">l</span> <span class="n">sshgw</span> <span class="n">bastion</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">org</span> <span class="n">db</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+
+
+<div class="highlight"><pre>ssh app-server.proxy
+</pre></div>
+
+
+<p>xxxxxxxxxxxxxxxxxx</p>
+<h4>Adding a new&nbsp;user</h4>
+<h4>Adding a new backend&nbsp;host</h4>
+<p>If the firewall is a Linux host, then the following <code>iptables</code> rules for the firewall sever implement the port <span class="caps">DNAT</span> from <code>public-ip:2224</code> to <code>db-serv:22</code>:</p>
+<div class="highlight"><pre><span class="c"># run on the firewall</span>
+
+<span class="nv">FIREWALL_EXTERNAL_IF</span><span class="o">=</span>eth0
+<span class="nv">EXTERNAL_SRC_PORT</span><span class="o">=</span>2224
+<span class="nv">BACKEND_SERVER</span><span class="o">=</span><span class="k">$(</span>hostname db-serv<span class="k">)</span>
+
+iptables -t nat -I PREROUTING -i <span class="k">${</span><span class="nv">FIREWALL_EXTERNAL_IF</span><span class="k">}</span> -p tcp --dport <span class="k">${</span><span class="nv">EXTERNAL_SRC_PORT</span><span class="k">}</span>  -m state --state NEW -j DNAT --to <span class="k">${</span><span class="nv">BACKEND_SERVER</span><span class="k">}</span>:22
+</pre></div>
+
+
+<p>Connecting to the database server from the internet is done by sshing to the specific&nbsp;port: </p>
+<div class="highlight"><pre><span class="c"># run on the operators system</span>
+
+ssh public-ip -p2224
+</pre></div>
+
+
+<h3>Evaluation</h3>
+<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
+<ul>
+<li><em>fully</em> fulfills the&nbsp;requirement,</li>
+<li><em>partially</em> fulfills the&nbsp;requirement</li>
+<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
+</ul>
+<h4><strong><span class="caps">REQ</span> 1:</strong> From the internet to the&nbsp;backend</h4>
+<p><em>An operator can access the backend system from the internet (via&nbsp;ssh).</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is made available to the&nbsp;operator.</p>
+<h4><strong><span class="caps">REQ</span> 2:</strong> Secured to the&nbsp;end</h4>
+<p><em>The whole connection from the operators system (internet) to the backend system must be secured via <span class="caps">SSH</span>.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
+<h4><strong><span class="caps">REQ</span> 3:</strong> no escape for&nbsp;operators</h4>
+<p><em>Operators must not be able to break out of the system (whereas system administrators might be able to do&nbsp;so).</em></p>
+<p>This solution does not allow ssh specific restrictions on the firewall. The only restriction is, which hosts are made available to the internet. The  solution  <em>fully</em>  fulfills the&nbsp;requirement. </p>
+<h4><strong><span class="caps">REQ</span> 4:</strong>Bastion&nbsp;Host</h4>
+<p><em>Only one host shout be exposed to the internet (the <em>bastion host</em>).</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement. In the example above, the database server is directly made available to any one on the&nbsp;internet.</p>
+<h4><strong><span class="caps">REQ</span> 5:</strong> Fine grained&nbsp;permissions</h4>
+<p><em>Certain options should be configurable on the bastion host on a per user and system base (e.g. allow <code>scp</code>, <code>sftp</code>, or <code>port forwarding</code> for user X to system&nbsp;Y).</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement, the connection is directly made to the backend&nbsp;systems.</p>
+<h4><strong><span class="caps">REQ</span> 6:</strong>&nbsp;Robustnes</h4>
+<p><em>Configuration and management should be robust. It should be easy for the administrator to execute a given task (e.g. create new user, add a new backend system) but difficult to bring the system in an inconsitent&nbsp;state.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. Only a single system (the firewall) needs to be&nbsp;modified.</p>
+<h4><strong><span class="caps">REQ</span> 7:</strong> Four eyes principle for&nbsp;usermanagement</h4>
+<p><em>It should be impossible for the administrator of a single system to grant a new operator/administrator access from the&nbsp;internet.</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement. Once the backend system is exposed to the internat, an operator on the backend system can give new users&nbsp;access.</p>
+<h4><strong><span class="caps">REQ</span> 8:</strong>  Port forwarding from the&nbsp;client</h4>
+<p><em>The operator should be able to use <span class="caps">SSH</span> port forwarding from his workstation to the backend&nbsp;systems.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
+<h4><strong><span class="caps">REQ</span> 9:</strong> scp to the&nbsp;backend</h4>
+<p><em>The operator should be able to use scp from his workstation to the backend&nbsp;systems.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
+<h4><strong><span class="caps">REQ</span> 10:</strong>&nbsp;Auditable</h4>
+<p><em>All communication must be monitored in such a way that a forensic analysis is possible at a later time&nbsp;(audit)</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement. In the best case, the firewall logs can be used to determine, which ip addresses have accessed the backend systems from the&nbsp;internet.</p>
+<h3>Conclusion</h3>
+<h4>Strengths</h4>
+<ul>
+<li>Very simple to set&nbsp;up</li>
+<li>Works well for smaller systems and when the requirements are less&nbsp;strict</li>
+<li>All <span class="caps">SSH</span> sub-protocolls,  and tools work without any changes (<code>sftp</code>, port-forwarding, <code>rsync</code>,&nbsp;&#8230;)</li>
+</ul>
+<h4>Weaknesses</h4>
+<ul>
+<li>Many requirements not&nbsp;fulfilled.</li>
+<li>All backend systems are directly exposed to the internet. This makes patching&nbsp;harder.</li>
+<li>Might get complex, when many backend systems are installed and/or they frequently change (<em>Which port was server 4711 again?</em>)</li>
+</ul>
+<h4>Final&nbsp;words</h4>
+<p>A simple solution for small scale systems with modest requirements regarding&nbsp;security.</p>
+<h4>Additional&nbsp;Ressources</h4>
+<ul>
+<li><a href="http://www.netfilter.org/">iptables</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Network_address_translation">NATing</a></li>
+</ul>
+<p><strong><span class="caps">WORK</span> <span class="caps">IN</span> <span class="caps">PROGRESS</span></strong></p>
 <h1>Solution in&nbsp;detail</h1>
 <p>In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&nbsp;deal.</p>
 <p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
@@ -104,7 +211,7 @@ baSSHtion            </a>
 </ul>
 <h2>Via <code>ProxyCommand</code></h2>
 <p>An <span class="caps">SSH</span> <code>ProxyCommand</code> is a configuration that tells the <span class="caps">SSH</span> client how to make the connection to the <span class="caps">SSH</span> server. When a proxy command is specified for a connection, then <span class="caps">SSH</span>
-<img alt="" src="./images/ProxyCommand.png" /></p>
+<img alt="" src="http://www.basshtion.org/images/ProxyCommand.png" /></p>
 <h3>Example&nbsp;implementation</h3>
 <h4>Adding a new backend&nbsp;host</h4>
 <h4>Adding a new&nbsp;user</h4>
@@ -171,11 +278,7 @@ baSSHtion            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="./tag/about.html">about</a>
-        /
-	<a href="./tag/overview.html">overview</a>
-        /
-	<a href="./tag/proxycommand.html">ProxyCommand</a>
+	<a href="http://www.basshtion.org/tag/proxycommand.html">ProxyCommand</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -193,46 +296,46 @@ baSSHtion            </a>
 
 
 
-                <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <li class="list-group-item"><a href="http://www.basshtion.org/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="./tag/overview.html">
-                                overview
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="./tag/about.html">
-                                about
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="./tag/jumphost.html">
+                            <a href="http://www.basshtion.org/tag/jumphost.html">
                                 jumphost
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="./tag/interactive.html">
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/interactive.html">
                                 interactive
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="./tag/proxycommand.html">
-                                ProxyCommand
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/about.html">
+                                about
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/overview.html">
+                                overview
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/firewall.html">
+                            <a href="http://www.basshtion.org/tag/firewall.html">
                                 firewall
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/others.html">
+                            <a href="http://www.basshtion.org/tag/others.html">
                                 others
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/dnat.html">
+                            <a href="http://www.basshtion.org/tag/dnat.html">
                                 dnat
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.basshtion.org/tag/proxycommand.html">
+                                ProxyCommand
                             </a>
                         </li>
                     </ul>
@@ -279,13 +382,13 @@ baSSHtion            </a>
       </div>
    </div>
 </footer>
-<script src="./theme/js/jquery.min.js"></script>
+<script src="http://www.basshtion.org/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="./theme/js/bootstrap.min.js"></script>
+<script src="http://www.basshtion.org/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="./theme/js/respond.min.js"></script>
+<script src="http://www.basshtion.org/theme/js/respond.min.js"></script>
 
 </body>
 </html>

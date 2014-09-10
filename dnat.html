@@ -10,23 +10,25 @@
 
 
 
-<link rel="canonical" href="./dnat.html">
+<link rel="canonical" href="http://www.basshtion.org/dnat.html">
 
         <meta name="author" content="Jens Neuhalfen" />
-        <meta name="keywords" content="about,overview,dnat,firewall" />
+        <meta name="keywords" content="dnat,firewall" />
         <meta name="description" content="Using the firewall to access backend systems via DNAT." />
 
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="./theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
-    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://www.basshtion.org/theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
+    <link href="http://www.basshtion.org/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="./theme/css/pygments/solarizeddark.css" rel="stylesheet">
-        <link href="./theme/css/typogrify.css" rel="stylesheet">
-    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
-        <link href="./static/custom.css" rel="stylesheet">
+    <link href="http://www.basshtion.org/theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="http://www.basshtion.org/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.basshtion.org/theme/css/style.css" type="text/css"/>
+        <link href="http://www.basshtion.org/static/custom.css" rel="stylesheet">
 
+        <link href="http://www.basshtion.org/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="baSSHtion ATOM Feed"/>
 
 </head>
 <body>
@@ -40,37 +42,40 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="./" class="navbar-brand">
+            <a href="http://www.basshtion.org/" class="navbar-brand">
 baSSHtion            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                             <li><a href="./pages/why.html">
+                             <li><a href="http://www.basshtion.org/pages/why.html">
                              Why?
                              </a></li>
-                             <li><a href="./pages/contribute.html">
+                             <li><a href="http://www.basshtion.org/pages/contribute.html">
                              Contribute
+                             </a></li>
+                             <li><a href="http://www.basshtion.org/pages/rfc.html">
+                             SSHv2&nbsp;internals
                              </a></li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="implementation-options">
-                                                <li><a href="./dnat.html"><span class="caps">DNAT</span></a></li>
-                                                <li><a href="./proxy_command.html">ProxyCommand</a></li>
-                                                <li><a href="./jump_host_interactive.html">JumpHost/interactive</a></li>
-                                                <li><a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
+                                                <li><a href="http://www.basshtion.org/dnat.html"><span class="caps">DNAT</span></a></li>
+                                                <li><a href="http://www.basshtion.org/proxy_command.html">ProxyCommand</a></li>
+                                                <li><a href="http://www.basshtion.org/jump_host_interactive.html">JumpHost/interactive</a></li>
+                                                <li><a href="http://www.basshtion.org/jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
                               </ul>
                             </li>
                         </li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="misc">Misc <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="misc">
-                                                <li><a href="./others.html">Others</a></li>
+                                                <li><a href="http://www.basshtion.org/others.html">Others</a></li>
                               </ul>
                             </li>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+                <li><a href="http://www.basshtion.org/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -85,7 +90,7 @@ baSSHtion            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="./dnat.html"
+                    <a href="http://www.basshtion.org/dnat.html"
                        rel="bookmark"
                        title="Permalink to DNAT">
                         <span class="caps">DNAT</span>
@@ -93,18 +98,10 @@ baSSHtion            </a>
                 </h1>
             </header>
             <div class="entry-content">
-                <p><strong><span class="caps">WORK</span> <span class="caps">IN</span> <span class="caps">PROGRESS</span></strong></p>
-<h1>Solutions in&nbsp;detail</h1>
-<p>In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&nbsp;deal.</p>
-<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
-<ul>
-<li><em>fully</em> fulfills the&nbsp;requirement,</li>
-<li><em>partially</em> fulfills the&nbsp;requirement</li>
-<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
-</ul>
+                <p>A possibility to give operators <span class="caps">SSH</span> access to backed systems is to use Port <em><span class="caps">DNAT</span></em>. With Port <span class="caps">DNAT</span>, a host exposed to the internet <a href="http://en.wikipedia.org/wiki/Network_address_translation#DNAT">DNATs</a> some of its ports to the backed systems. E.g. <code>public-ip:2224</code> is forwarded to <code>db-server:22</code>, and <code>public-ip:2222</code> is forwarded to <code>app-server:22</code>. To access the <span class="caps">DB</span> server the operator points ssh to the public ip, e.g. <code>ssh public-ip -p2224</code>.</p>
 <h2>Port <span class="caps">DNAT</span></h2>
 <p>When using Port <span class="caps">DNAT</span> to access backend hosts, the backend hosts are partially exposed to the internet. The firewall will forward a port on its external interface to an ssh server running on a backend system. E.g. <code>public-ip:2224</code> is forwarded to <code>db-server:22</code>, and <code>public-ip:2223</code> is forwarded to <code>app-server:22</code>. </p>
-<p><img alt="" src="./images/DNAT.png" /></p>
+<p><img alt="" src="http://www.basshtion.org/images/DNAT.png" /></p>
 <p>The operator points ssh to the public ip, e.g. <code>ssh public-ip -p2222</code> to transparently ssh to <code>db-server</code>.</p>
 <h3>Example&nbsp;implementation</h3>
 <p>Setting up <span class="caps">NAT</span> is straight forward and requires a single firewall change per host.  Users are only managed on the backend&nbsp;systems.</p>
@@ -130,52 +127,42 @@ ssh public-ip -p2224
 <h4>Adding a new&nbsp;user</h4>
 <p>New users are only added to the backend&nbsp;systems.</p>
 <h3>Evaluation</h3>
-<table>
-<thead>
-<tr>
-<th>Requirement</th>
-<th>requirement fulfilled</th>
-<th>comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em><span class="caps">REQ</span> 1: Bastion Host</em></td>
-<td>partially</td>
-<td>The firewall reduces the attack surface of the backend systems to the ssh port.</td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 2: Auditable</em></td>
-<td>no</td>
-<td>Only <span class="caps">SSH</span> encrypted traffic passes through the firewall, preventing an audit of the content.</td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 3: Fine grained permissions</em></td>
-<td>no</td>
-<td>The firewall can only restrict communication to specific source/destination addresses.</td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 4: Robustness</em></td>
-<td>fully</td>
-<td>Changes are limited to one system, making them very robust to carry out.</td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 5: Four eyes principle for usermanagement</em></td>
-<td>no</td>
-<td>Anybody who can manage users on a backend system can do so alone. Anyone who can administer the firewall can add/remove hosts.</td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 6: Port forwarding</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 7: scp</em></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
+<ul>
+<li><em>fully</em> fulfills the&nbsp;requirement,</li>
+<li><em>partially</em> fulfills the&nbsp;requirement</li>
+<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
+</ul>
+<h4><strong><span class="caps">REQ</span> 1:</strong> From the internet to the&nbsp;backend</h4>
+<p><em>An operator can access the backend system from the internet (via&nbsp;ssh).</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is made available to the&nbsp;operator.</p>
+<h4><strong><span class="caps">REQ</span> 2:</strong> Secured to the&nbsp;end</h4>
+<p><em>The whole connection from the operators system (internet) to the backend system must be secured via <span class="caps">SSH</span>.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
+<h4><strong><span class="caps">REQ</span> 3:</strong> no escape for&nbsp;operators</h4>
+<p><em>Operators must not be able to break out of the system (whereas system administrators might be able to do&nbsp;so).</em></p>
+<p>This solution does not allow ssh specific restrictions on the firewall. The only restriction is, which hosts are made available to the internet. The  solution  <em>fully</em>  fulfills the&nbsp;requirement. </p>
+<h4><strong><span class="caps">REQ</span> 4:</strong>Bastion&nbsp;Host</h4>
+<p><em>Only one host shout be exposed to the internet (the <em>bastion host</em>).</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement. In the example above, the database server is directly made available to any one on the&nbsp;internet.</p>
+<h4><strong><span class="caps">REQ</span> 5:</strong> Fine grained&nbsp;permissions</h4>
+<p><em>Certain options should be configurable on the bastion host on a per user and system base (e.g. allow <code>scp</code>, <code>sftp</code>, or <code>port forwarding</code> for user X to system&nbsp;Y).</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement, the connection is directly made to the backend&nbsp;systems.</p>
+<h4><strong><span class="caps">REQ</span> 6:</strong>&nbsp;Robustnes</h4>
+<p><em>Configuration and management should be robust. It should be easy for the administrator to execute a given task (e.g. create new user, add a new backend system) but difficult to bring the system in an inconsitent&nbsp;state.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. Only a single system (the firewall) needs to be&nbsp;modified.</p>
+<h4><strong><span class="caps">REQ</span> 7:</strong> Four eyes principle for&nbsp;usermanagement</h4>
+<p><em>It should be impossible for the administrator of a single system to grant a new operator/administrator access from the&nbsp;internet.</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement. Once the backend system is exposed to the internat, an operator on the backend system can give new users&nbsp;access.</p>
+<h4><strong><span class="caps">REQ</span> 8:</strong>  Port forwarding from the&nbsp;client</h4>
+<p><em>The operator should be able to use <span class="caps">SSH</span> port forwarding from his workstation to the backend&nbsp;systems.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
+<h4><strong><span class="caps">REQ</span> 9:</strong> scp to the&nbsp;backend</h4>
+<p><em>The operator should be able to use scp from his workstation to the backend&nbsp;systems.</em></p>
+<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
+<h4><strong><span class="caps">REQ</span> 10:</strong>&nbsp;Auditable</h4>
+<p><em>All communication must be monitored in such a way that a forensic analysis is possible at a later time&nbsp;(audit)</em></p>
+<p>The  solution  provides <em>no</em>  solution to this requirement. In the best case, the firewall logs can be used to determine, which ip addresses have accessed the backend systems from the&nbsp;internet.</p>
 <h3>Conclusion</h3>
 <h4>Strengths</h4>
 <ul>
@@ -208,13 +195,9 @@ ssh public-ip -p2224
 
 
 <span class="label label-default">Tags</span>
-	<a href="./tag/about.html">about</a>
+	<a href="http://www.basshtion.org/tag/dnat.html">dnat</a>
         /
-	<a href="./tag/overview.html">overview</a>
-        /
-	<a href="./tag/dnat.html">dnat</a>
-        /
-	<a href="./tag/firewall.html">firewall</a>
+	<a href="http://www.basshtion.org/tag/firewall.html">firewall</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -232,46 +215,46 @@ ssh public-ip -p2224
 
 
 
-                <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <li class="list-group-item"><a href="http://www.basshtion.org/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="./tag/overview.html">
-                                overview
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="./tag/about.html">
-                                about
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="./tag/jumphost.html">
+                            <a href="http://www.basshtion.org/tag/jumphost.html">
                                 jumphost
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="./tag/interactive.html">
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/interactive.html">
                                 interactive
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="./tag/proxycommand.html">
-                                ProxyCommand
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/about.html">
+                                about
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/overview.html">
+                                overview
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/firewall.html">
+                            <a href="http://www.basshtion.org/tag/firewall.html">
                                 firewall
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/others.html">
+                            <a href="http://www.basshtion.org/tag/others.html">
                                 others
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="./tag/dnat.html">
+                            <a href="http://www.basshtion.org/tag/dnat.html">
                                 dnat
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.basshtion.org/tag/proxycommand.html">
+                                ProxyCommand
                             </a>
                         </li>
                     </ul>
@@ -318,13 +301,13 @@ ssh public-ip -p2224
       </div>
    </div>
 </footer>
-<script src="./theme/js/jquery.min.js"></script>
+<script src="http://www.basshtion.org/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="./theme/js/bootstrap.min.js"></script>
+<script src="http://www.basshtion.org/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="./theme/js/respond.min.js"></script>
+<script src="http://www.basshtion.org/theme/js/respond.min.js"></script>
 
 </body>
 </html>
