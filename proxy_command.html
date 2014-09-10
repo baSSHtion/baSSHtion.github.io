@@ -122,150 +122,8 @@ baSSHtion            </a>
 </pre></div>
 
 
-<p>xxxxxxxxxxxxxxxxxx</p>
-<h4>Adding a new&nbsp;user</h4>
-<h4>Adding a new backend&nbsp;host</h4>
-<p>If the firewall is a Linux host, then the following <code>iptables</code> rules for the firewall sever implement the port <span class="caps">DNAT</span> from <code>public-ip:2224</code> to <code>db-serv:22</code>:</p>
-<div class="highlight"><pre><span class="c"># run on the firewall</span>
-
-<span class="nv">FIREWALL_EXTERNAL_IF</span><span class="o">=</span>eth0
-<span class="nv">EXTERNAL_SRC_PORT</span><span class="o">=</span>2224
-<span class="nv">BACKEND_SERVER</span><span class="o">=</span><span class="k">$(</span>hostname db-serv<span class="k">)</span>
-
-iptables -t nat -I PREROUTING -i <span class="k">${</span><span class="nv">FIREWALL_EXTERNAL_IF</span><span class="k">}</span> -p tcp --dport <span class="k">${</span><span class="nv">EXTERNAL_SRC_PORT</span><span class="k">}</span>  -m state --state NEW -j DNAT --to <span class="k">${</span><span class="nv">BACKEND_SERVER</span><span class="k">}</span>:22
-</pre></div>
-
-
-<p>Connecting to the database server from the internet is done by sshing to the specific&nbsp;port: </p>
-<div class="highlight"><pre><span class="c"># run on the operators system</span>
-
-ssh public-ip -p2224
-</pre></div>
-
-
 <h3>Evaluation</h3>
-<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
-<ul>
-<li><em>fully</em> fulfills the&nbsp;requirement,</li>
-<li><em>partially</em> fulfills the&nbsp;requirement</li>
-<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
-</ul>
-<h4><strong><span class="caps">REQ</span> 1:</strong> From the internet to the&nbsp;backend</h4>
-<p><em>An operator can access the backend system from the internet (via&nbsp;ssh).</em></p>
-<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is made available to the&nbsp;operator.</p>
-<h4><strong><span class="caps">REQ</span> 2:</strong> Secured to the&nbsp;end</h4>
-<p><em>The whole connection from the operators system (internet) to the backend system must be secured via <span class="caps">SSH</span>.</em></p>
-<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
-<h4><strong><span class="caps">REQ</span> 3:</strong> no escape for&nbsp;operators</h4>
-<p><em>Operators must not be able to break out of the system (whereas system administrators might be able to do&nbsp;so).</em></p>
-<p>This solution does not allow ssh specific restrictions on the firewall. The only restriction is, which hosts are made available to the internet. The  solution  <em>fully</em>  fulfills the&nbsp;requirement. </p>
-<h4><strong><span class="caps">REQ</span> 4:</strong>Bastion&nbsp;Host</h4>
-<p><em>Only one host shout be exposed to the internet (the <em>bastion host</em>).</em></p>
-<p>The  solution  provides <em>no</em>  solution to this requirement. In the example above, the database server is directly made available to any one on the&nbsp;internet.</p>
-<h4><strong><span class="caps">REQ</span> 5:</strong> Fine grained&nbsp;permissions</h4>
-<p><em>Certain options should be configurable on the bastion host on a per user and system base (e.g. allow <code>scp</code>, <code>sftp</code>, or <code>port forwarding</code> for user X to system&nbsp;Y).</em></p>
-<p>The  solution  provides <em>no</em>  solution to this requirement, the connection is directly made to the backend&nbsp;systems.</p>
-<h4><strong><span class="caps">REQ</span> 6:</strong>&nbsp;Robustnes</h4>
-<p><em>Configuration and management should be robust. It should be easy for the administrator to execute a given task (e.g. create new user, add a new backend system) but difficult to bring the system in an inconsitent&nbsp;state.</em></p>
-<p>The  solution  <em>fully</em>  fulfills the requirement. Only a single system (the firewall) needs to be&nbsp;modified.</p>
-<h4><strong><span class="caps">REQ</span> 7:</strong> Four eyes principle for&nbsp;usermanagement</h4>
-<p><em>It should be impossible for the administrator of a single system to grant a new operator/administrator access from the&nbsp;internet.</em></p>
-<p>The  solution  provides <em>no</em>  solution to this requirement. Once the backend system is exposed to the internat, an operator on the backend system can give new users&nbsp;access.</p>
-<h4><strong><span class="caps">REQ</span> 8:</strong>  Port forwarding from the&nbsp;client</h4>
-<p><em>The operator should be able to use <span class="caps">SSH</span> port forwarding from his workstation to the backend&nbsp;systems.</em></p>
-<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
-<h4><strong><span class="caps">REQ</span> 9:</strong> scp to the&nbsp;backend</h4>
-<p><em>The operator should be able to use scp from his workstation to the backend&nbsp;systems.</em></p>
-<p>The  solution  <em>fully</em>  fulfills the requirement. In the example above, the database server is accessed by a direct ssh&nbsp;connection.</p>
-<h4><strong><span class="caps">REQ</span> 10:</strong>&nbsp;Auditable</h4>
-<p><em>All communication must be monitored in such a way that a forensic analysis is possible at a later time&nbsp;(audit)</em></p>
-<p>The  solution  provides <em>no</em>  solution to this requirement. In the best case, the firewall logs can be used to determine, which ip addresses have accessed the backend systems from the&nbsp;internet.</p>
-<h3>Conclusion</h3>
-<h4>Strengths</h4>
-<ul>
-<li>Very simple to set&nbsp;up</li>
-<li>Works well for smaller systems and when the requirements are less&nbsp;strict</li>
-<li>All <span class="caps">SSH</span> sub-protocolls,  and tools work without any changes (<code>sftp</code>, port-forwarding, <code>rsync</code>,&nbsp;&#8230;)</li>
-</ul>
-<h4>Weaknesses</h4>
-<ul>
-<li>Many requirements not&nbsp;fulfilled.</li>
-<li>All backend systems are directly exposed to the internet. This makes patching&nbsp;harder.</li>
-<li>Might get complex, when many backend systems are installed and/or they frequently change (<em>Which port was server 4711 again?</em>)</li>
-</ul>
-<h4>Final&nbsp;words</h4>
-<p>A simple solution for small scale systems with modest requirements regarding&nbsp;security.</p>
-<h4>Additional&nbsp;Ressources</h4>
-<ul>
-<li><a href="http://www.netfilter.org/">iptables</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Network_address_translation">NATing</a></li>
-</ul>
 <p><strong><span class="caps">WORK</span> <span class="caps">IN</span> <span class="caps">PROGRESS</span></strong></p>
-<h1>Solution in&nbsp;detail</h1>
-<p>In the following sections the solution ideas from above are explained, and analysed. The discussed implementations are examples, and can be varied by a great&nbsp;deal.</p>
-<p>An evaluation of each of the requirements stated is given, and summarized in the&nbsp;result</p>
-<ul>
-<li><em>fully</em> fulfills the&nbsp;requirement,</li>
-<li><em>partially</em> fulfills the&nbsp;requirement</li>
-<li><em>no</em> or inadequate fulfillment of the&nbsp;requirement</li>
-</ul>
-<h2>Via <code>ProxyCommand</code></h2>
-<p>An <span class="caps">SSH</span> <code>ProxyCommand</code> is a configuration that tells the <span class="caps">SSH</span> client how to make the connection to the <span class="caps">SSH</span> server. When a proxy command is specified for a connection, then <span class="caps">SSH</span>
-<img alt="" src="http://www.basshtion.org/images/ProxyCommand.png" /></p>
-<h3>Example&nbsp;implementation</h3>
-<h4>Adding a new backend&nbsp;host</h4>
-<h4>Adding a new&nbsp;user</h4>
-<h3>Evaluation</h3>
-<table>
-<thead>
-<tr>
-<th>Requirement</th>
-<th>requirement fulfilled</th>
-<th>comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em><span class="caps">REQ</span> 1: Bastion Host</em></td>
-<td>partially</td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 2: Auditable</em></td>
-<td>no</td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 3: Fine grained permissions</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 4: Robustness</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 5: Four eyes principle for usermanagement</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 6: Port forwarding</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em><span class="caps">REQ</span> 7: scp</em></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3>Conclusion</h3>
-<h4>Strengths</h4>
-<h4>Contra</h4>
-<h4>Final&nbsp;words</h4>
                 <hr/>
                 <div class="panel">
                     <div class="panel-body">
@@ -304,11 +162,6 @@ ssh public-ip -p2224
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/interactive.html">
-                                interactive
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://www.basshtion.org/tag/about.html">
                                 about
                             </a>
@@ -316,6 +169,11 @@ ssh public-ip -p2224
                         <li class="list-group-item tag-1">
                             <a href="http://www.basshtion.org/tag/overview.html">
                                 overview
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.basshtion.org/tag/interactive.html">
+                                interactive
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
