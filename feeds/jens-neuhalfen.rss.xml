@@ -148,12 +148,12 @@ ssh public-ip -p2224
 &lt;h2&gt;Large(r)&amp;nbsp;Installations&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://TODO"&gt;mussh&lt;/a&gt; provides the means to run a command in parallel on multiple&amp;nbsp;machines.&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://TODO"&gt;Chef&lt;/a&gt;, &lt;a href="http://TODO"&gt;Puppet&lt;/a&gt;, &lt;a href="http://TODO"&gt;salt&lt;/a&gt;, and others are usefull to configure large infrastructure&amp;nbsp;setups.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.getchef.com/chef/"&gt;Chef&lt;/a&gt;, &lt;a href="http://puppetlabs.com/"&gt;Puppet&lt;/a&gt;, &lt;a href="http://www.saltstack.com/"&gt;salt&lt;/a&gt;, &lt;a href="http://www.ansible.com/home"&gt;ansible&lt;/a&gt; and others are usefull to configure large infrastructure&amp;nbsp;setups.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Products&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.openssh.com/"&gt;OpenSSH&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
+&lt;li&gt;There is a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
 &lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jens Neuhalfen</dc:creator><pubDate>Sun, 24 Aug 2014 23:15:00 +0200</pubDate><guid>tag:www.basshtion.org,2014-08-23:others.html</guid><category>others</category></item><item><title>ProxyCommand</title><link>http://www.basshtion.org/proxy_command.html</link><description>&lt;p&gt;A built in solutions to implement a bastion host is the &lt;em&gt;ProxyCommand&lt;/em&gt; command of OpenSSH. The proxy command tells the &lt;code&gt;ssh&lt;/code&gt; client how to connect to the ssh&amp;nbsp;server. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="http://www.basshtion.org/images/ProxyCommand.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Example&amp;nbsp;implementation&lt;/h3&gt;

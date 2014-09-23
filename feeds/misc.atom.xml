@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>baSSHtion</title><link href="http://www.basshtion.org/" rel="alternate"></link><link href="http://www.basshtion.org/feeds/misc.atom.xml" rel="self"></link><id>http://www.basshtion.org/</id><updated>2014-08-24T23:15:00+02:00</updated><entry><title>Others</title><link href="http://www.basshtion.org/others.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:others.html</id><summary type="html">&lt;h2&gt;&lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;Misc&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;a PoC of a &lt;a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack"&gt;transparent proxy&lt;/a&gt; that implements a &lt;a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack"&gt;Man in the Middle Attack&lt;/a&gt; on &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;connections.&lt;/li&gt;
-&lt;li&gt;&lt;span class="caps"&gt;TODO&lt;/span&gt;: Die geklauten ssh&amp;nbsp;keys&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Large(r)&amp;nbsp;Installations&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>baSSHtion</title><link href="http://www.basshtion.org/" rel="alternate"></link><link href="http://www.basshtion.org/feeds/misc.atom.xml" rel="self"></link><id>http://www.basshtion.org/</id><updated>2014-08-24T23:15:00+02:00</updated><entry><title>Others</title><link href="http://www.basshtion.org/others.html" rel="alternate"></link><updated>2014-08-24T23:15:00+02:00</updated><author><name>Jens Neuhalfen</name></author><id>tag:www.basshtion.org,2014-08-23:others.html</id><summary type="html">&lt;h2&gt;Attacks against &lt;span class="caps"&gt;SSH&lt;/span&gt;&lt;/h2&gt;
+&lt;h3&gt;Man in the&amp;nbsp;middle&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This program demonstrates man-in-the-middle attack with key manipulation for ssh that intercepts the plaintext communication, and the password used for&amp;nbsp;authentication.&lt;/p&gt;
+&lt;p&gt;If this PoC is run, it listens to a port on the local machine, and logically forwards the connection to a &lt;span class="caps"&gt;SSH&lt;/span&gt; server running on the network. It does so my terminating the &lt;span class="caps"&gt;SSH&lt;/span&gt; connection from the client, and establishing its own connection to the &amp;#8216;real&amp;#8217; server. This allows the PoC to read the communication in&amp;nbsp;plain.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack"&gt;more&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Factoring keys with low&amp;nbsp;entropy&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We have been able to remotely compromise about 0.4% of all the public keys used for &lt;span class="caps"&gt;SSL&lt;/span&gt; web site security. The keys we were able to compromise were generated incorrectly–using predictable “random” numbers that were sometimes repeated. There were two kinds of problems: keys that were generated with predictable randomness, and a subset of these, where the lack of randomness allows a remote attacker to efficiently factor the public key and obtain the private key. With the private key, an attacker can impersonate a web site or possibly decrypt encrypted traffic to that web site. We’ve developed a tool that can factor these keys and give us the private keys to all the hosts vulnerable to this attack on the Internet in only a few&amp;nbsp;hours. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://freedom-to-tinker.com/blog/nadiah/new-research-theres-no-need-panic-over-factorable-keys-just-mind-your-ps-and-qs/"&gt;more&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Large(r)&amp;nbsp;Installations&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://TODO"&gt;mussh&lt;/a&gt; provides the means to run a command in parallel on multiple&amp;nbsp;machines.&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://TODO"&gt;Chef&lt;/a&gt;, &lt;a href="http://TODO"&gt;Puppet&lt;/a&gt;, &lt;a href="http://TODO"&gt;salt&lt;/a&gt;, and others are usefull to configure large infrastructure&amp;nbsp;setups.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.getchef.com/chef/"&gt;Chef&lt;/a&gt;, &lt;a href="http://puppetlabs.com/"&gt;Puppet&lt;/a&gt;, &lt;a href="http://www.saltstack.com/"&gt;salt&lt;/a&gt;, &lt;a href="http://www.ansible.com/home"&gt;ansible&lt;/a&gt; and others are usefull to configure large infrastructure&amp;nbsp;setups.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Products&lt;/h3&gt;
+&lt;h2&gt;Products&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.openssh.com/"&gt;OpenSSH&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
+&lt;li&gt;There is a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="others"></category></entry></feed>
