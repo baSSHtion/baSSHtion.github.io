@@ -10,7 +10,7 @@
 
 
 
-<link rel="canonical" href="http://www.basshtion.org/others.html">
+<link rel="canonical" href="./others.html">
 
         <meta name="author" content="Jens Neuhalfen" />
         <meta name="keywords" content="others" />
@@ -19,16 +19,14 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="http://www.basshtion.org/theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
-    <link href="http://www.basshtion.org/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://www.basshtion.org/theme/css/pygments/solarizeddark.css" rel="stylesheet">
-        <link href="http://www.basshtion.org/theme/css/typogrify.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://www.basshtion.org/theme/css/style.css" type="text/css"/>
-        <link href="http://www.basshtion.org/static/custom.css" rel="stylesheet">
+    <link href="./theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="./theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+        <link href="./static/custom.css" rel="stylesheet">
 
-        <link href="http://www.basshtion.org/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="baSSHtion ATOM Feed"/>
 
 </head>
 <body>
@@ -42,40 +40,40 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="http://www.basshtion.org/" class="navbar-brand">
+            <a href="./" class="navbar-brand">
 baSSHtion            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                             <li><a href="http://www.basshtion.org/pages/why.html">
+                             <li><a href="./pages/why.html">
                              Why?
                              </a></li>
-                             <li><a href="http://www.basshtion.org/pages/contribute.html">
+                             <li><a href="./pages/contribute.html">
                              Contribute
                              </a></li>
-                             <li><a href="http://www.basshtion.org/pages/rfc.html">
+                             <li><a href="./pages/rfc.html">
                              SSHv2&nbsp;internals
                              </a></li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="implementation-options">
-                                                <li><a href="http://www.basshtion.org/dnat.html"><span class="caps">DNAT</span></a></li>
-                                                <li><a href="http://www.basshtion.org/proxy_command.html">ProxyCommand</a></li>
-                                                <li><a href="http://www.basshtion.org/jump_host_interactive.html">JumpHost/interactive</a></li>
-                                                <li><a href="http://www.basshtion.org/jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
+                                                <li><a href="./dnat.html"><span class="caps">DNAT</span></a></li>
+                                                <li><a href="./proxy_command.html">ProxyCommand</a></li>
+                                                <li><a href="./jump_host_interactive.html">JumpHost/interactive</a></li>
+                                                <li><a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
                               </ul>
                             </li>
                         </li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="misc">Misc <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="misc">
-                                                <li><a href="http://www.basshtion.org/others.html">Others</a></li>
+                                                <li><a href="./others.html">Others</a></li>
                               </ul>
                             </li>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://www.basshtion.org/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -90,7 +88,7 @@ baSSHtion            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://www.basshtion.org/others.html"
+                    <a href="./others.html"
                        rel="bookmark"
                        title="Permalink to Others">
                         Others
@@ -98,17 +96,24 @@ baSSHtion            </a>
                 </h1>
             </header>
             <div class="entry-content">
-                <h2><span class="caps">SSH</span>&nbsp;Misc</h2>
-<ul>
-<li>a PoC of a <a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack">transparent proxy</a> that implements a <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">Man in the Middle Attack</a> on <span class="caps">SSH</span>&nbsp;connections.</li>
-<li><span class="caps">TODO</span>: Die geklauten ssh&nbsp;keys</li>
-</ul>
-<h3>Large(r)&nbsp;Installations</h3>
+                <h2>Attacks against <span class="caps">SSH</span></h2>
+<h3>Man in the&nbsp;middle</h3>
+<blockquote>
+<p>This program demonstrates man-in-the-middle attack with key manipulation for ssh that intercepts the plaintext communication, and the password used for&nbsp;authentication.</p>
+<p>If this PoC is run, it listens to a port on the local machine, and logically forwards the connection to a <span class="caps">SSH</span> server running on the network. It does so my terminating the <span class="caps">SSH</span> connection from the client, and establishing its own connection to the &#8216;real&#8217; server. This allows the PoC to read the communication in&nbsp;plain.</p>
+</blockquote>
+<p><a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack">more</a></p>
+<h3>Factoring keys with low&nbsp;entropy</h3>
+<blockquote>
+<p>We have been able to remotely compromise about 0.4% of all the public keys used for <span class="caps">SSL</span> web site security. The keys we were able to compromise were generated incorrectly–using predictable “random” numbers that were sometimes repeated. There were two kinds of problems: keys that were generated with predictable randomness, and a subset of these, where the lack of randomness allows a remote attacker to efficiently factor the public key and obtain the private key. With the private key, an attacker can impersonate a web site or possibly decrypt encrypted traffic to that web site. We’ve developed a tool that can factor these keys and give us the private keys to all the hosts vulnerable to this attack on the Internet in only a few&nbsp;hours. </p>
+</blockquote>
+<p><a href="https://freedom-to-tinker.com/blog/nadiah/new-research-theres-no-need-panic-over-factorable-keys-just-mind-your-ps-and-qs/">more</a></p>
+<h2>Large(r)&nbsp;Installations</h2>
 <ul>
 <li><a href="http://TODO">mussh</a> provides the means to run a command in parallel on multiple&nbsp;machines.</li>
 <li><a href="http://TODO">Chef</a>, <a href="http://TODO">Puppet</a>, <a href="http://TODO">salt</a>, and others are usefull to configure large infrastructure&nbsp;setups.</li>
 </ul>
-<h3>Products</h3>
+<h2>Products</h2>
 <ul>
 <li><a href="http://www.openssh.com/">OpenSSH</a></li>
 <li>a commercial solution called <a href="https://www.balabit.com">BalaBit Shell Control Box</a> that implements a pretty exthausive&nbsp;solution.</li>
@@ -125,7 +130,7 @@ baSSHtion            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://www.basshtion.org/tag/others.html">others</a>
+	<a href="./tag/others.html">others</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -143,46 +148,46 @@ baSSHtion            </a>
 
 
 
-                <li class="list-group-item"><a href="http://www.basshtion.org/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/jumphost.html">
-                                jumphost
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/interactive.html">
-                                interactive
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/about.html">
+                            <a href="./tag/about.html">
                                 about
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/overview.html">
+                            <a href="./tag/overview.html">
                                 overview
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/firewall.html">
-                                firewall
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/interactive.html">
+                                interactive
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/jumphost.html">
+                                jumphost
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/others.html">
-                                others
+                            <a href="./tag/proxycommand.html">
+                                ProxyCommand
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/dnat.html">
+                            <a href="./tag/dnat.html">
                                 dnat
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/proxycommand.html">
-                                ProxyCommand
+                            <a href="./tag/others.html">
+                                others
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/firewall.html">
+                                firewall
                             </a>
                         </li>
                     </ul>
@@ -229,13 +234,13 @@ baSSHtion            </a>
       </div>
    </div>
 </footer>
-<script src="http://www.basshtion.org/theme/js/jquery.min.js"></script>
+<script src="./theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://www.basshtion.org/theme/js/bootstrap.min.js"></script>
+<script src="./theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="http://www.basshtion.org/theme/js/respond.min.js"></script>
+<script src="./theme/js/respond.min.js"></script>
 
 </body>
 </html>

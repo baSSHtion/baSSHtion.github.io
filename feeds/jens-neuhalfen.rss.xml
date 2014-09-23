@@ -133,21 +133,28 @@ ssh public-ip -p2224
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;h4&gt;Strengths&lt;/h4&gt;
 &lt;h4&gt;Weaknesses&lt;/h4&gt;
-&lt;h4&gt;Final&amp;nbsp;words&lt;/h4&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jens Neuhalfen</dc:creator><pubDate>Sun, 24 Aug 2014 23:15:00 +0200</pubDate><guid>tag:www.basshtion.org,2014-08-23:jump_host_non_interactive.html</guid><category>about</category><category>overview</category><category>jumphost</category><category>interactive</category></item><item><title>Others</title><link>http://www.basshtion.org/others.html</link><description>&lt;h2&gt;&lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;Misc&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;a PoC of a &lt;a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack"&gt;transparent proxy&lt;/a&gt; that implements a &lt;a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack"&gt;Man in the Middle Attack&lt;/a&gt; on &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;connections.&lt;/li&gt;
-&lt;li&gt;&lt;span class="caps"&gt;TODO&lt;/span&gt;: Die geklauten ssh&amp;nbsp;keys&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Large(r)&amp;nbsp;Installations&lt;/h3&gt;
+&lt;h4&gt;Final&amp;nbsp;words&lt;/h4&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jens Neuhalfen</dc:creator><pubDate>Sun, 24 Aug 2014 23:15:00 +0200</pubDate><guid>tag:www.basshtion.org,2014-08-23:jump_host_non_interactive.html</guid><category>about</category><category>overview</category><category>jumphost</category><category>interactive</category></item><item><title>Others</title><link>http://www.basshtion.org/others.html</link><description>&lt;h2&gt;Attacks against &lt;span class="caps"&gt;SSH&lt;/span&gt;&lt;/h2&gt;
+&lt;h3&gt;Man in the&amp;nbsp;middle&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This program demonstrates man-in-the-middle attack with key manipulation for ssh that intercepts the plaintext communication, and the password used for&amp;nbsp;authentication.&lt;/p&gt;
+&lt;p&gt;If this PoC is run, it listens to a port on the local machine, and logically forwards the connection to a &lt;span class="caps"&gt;SSH&lt;/span&gt; server running on the network. It does so my terminating the &lt;span class="caps"&gt;SSH&lt;/span&gt; connection from the client, and establishing its own connection to the &amp;#8216;real&amp;#8217; server. This allows the PoC to read the communication in&amp;nbsp;plain.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://github.com/baSSHtion/ssh-man-in-the-middle-attack"&gt;more&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Factoring keys with low&amp;nbsp;entropy&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We have been able to remotely compromise about 0.4% of all the public keys used for &lt;span class="caps"&gt;SSL&lt;/span&gt; web site security. The keys we were able to compromise were generated incorrectly–using predictable “random” numbers that were sometimes repeated. There were two kinds of problems: keys that were generated with predictable randomness, and a subset of these, where the lack of randomness allows a remote attacker to efficiently factor the public key and obtain the private key. With the private key, an attacker can impersonate a web site or possibly decrypt encrypted traffic to that web site. We’ve developed a tool that can factor these keys and give us the private keys to all the hosts vulnerable to this attack on the Internet in only a few&amp;nbsp;hours. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://freedom-to-tinker.com/blog/nadiah/new-research-theres-no-need-panic-over-factorable-keys-just-mind-your-ps-and-qs/"&gt;more&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Large(r)&amp;nbsp;Installations&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://TODO"&gt;mussh&lt;/a&gt; provides the means to run a command in parallel on multiple&amp;nbsp;machines.&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://TODO"&gt;Chef&lt;/a&gt;, &lt;a href="http://TODO"&gt;Puppet&lt;/a&gt;, &lt;a href="http://TODO"&gt;salt&lt;/a&gt;, and others are usefull to configure large infrastructure&amp;nbsp;setups.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Products&lt;/h3&gt;
+&lt;h2&gt;Products&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.openssh.com/"&gt;OpenSSH&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;a commercial solution called &lt;a href="https://www.balabit.com"&gt;BalaBit Shell Control Box&lt;/a&gt; that implements a pretty exthausive&amp;nbsp;solution.&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jens Neuhalfen</dc:creator><pubDate>Sun, 24 Aug 2014 23:15:00 +0200</pubDate><guid>tag:www.basshtion.org,2014-08-23:others.html</guid><category>others</category></item><item><title>ProxyCommand</title><link>http://www.basshtion.org/proxy_command.html</link><description>&lt;p&gt;A built in solutions to implement a bastion host is the &lt;em&gt;ProxyCommand&lt;/em&gt; command of OpenSSH. The proxy command tells the &lt;code&gt;ssh&lt;/code&gt; client how to connect to the ssh server. E.g. &lt;code&gt;ssh public-ip -o ProxyCommand "nc db-server 22"&lt;/code&gt; would ssh to the public-ip. There it would execute netcat, and then try to connect from the client, &lt;em&gt;through&lt;/em&gt; the ssh to public-ip,  &lt;em&gt;through&lt;/em&gt; the netcat pipe and to the db-server to establish the final ssh&amp;nbsp;connection.&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jens Neuhalfen</dc:creator><pubDate>Sun, 24 Aug 2014 23:15:00 +0200</pubDate><guid>tag:www.basshtion.org,2014-08-23:others.html</guid><category>others</category></item><item><title>ProxyCommand</title><link>http://www.basshtion.org/proxy_command.html</link><description>&lt;p&gt;A built in solutions to implement a bastion host is the &lt;em&gt;ProxyCommand&lt;/em&gt; command of OpenSSH. The proxy command tells the &lt;code&gt;ssh&lt;/code&gt; client how to connect to the ssh&amp;nbsp;server. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="http://www.basshtion.org/images/ProxyCommand.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Example&amp;nbsp;implementation&lt;/h3&gt;
 &lt;p&gt;Setting up ProxyCommand is straight forward and requires an &lt;span class="caps"&gt;SSH&lt;/span&gt; server exposed to the internet (the bastion&amp;nbsp;host). &lt;/p&gt;
@@ -159,11 +166,11 @@ ssh public-ip -p2224
 
 &lt;span class="n"&gt;Host&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;proxy&lt;/span&gt;
      &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;admin&lt;/span&gt;
-     &lt;span class="n"&gt;ProxyCommand&lt;/span&gt;    &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;sshgw&lt;/span&gt; &lt;span class="n"&gt;bastion&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;
+     &lt;span class="n"&gt;ProxyCommand&lt;/span&gt;    &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;sshgw&lt;/span&gt; &lt;span class="n"&gt;bastion&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;nc app-server:22&amp;quot;&lt;/span&gt;
 
 &lt;span class="n"&gt;Host&lt;/span&gt; &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;proxy&lt;/span&gt;
      &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;admin&lt;/span&gt;
-     &lt;span class="n"&gt;ProxyCommand&lt;/span&gt;    &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;sshgw&lt;/span&gt; &lt;span class="n"&gt;bastion&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt; &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;
+     &lt;span class="n"&gt;ProxyCommand&lt;/span&gt;    &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;sshgw&lt;/span&gt; &lt;span class="n"&gt;bastion&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;nc db-server:22&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -171,5 +178,25 @@ ssh public-ip -p2224
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;This&lt;code&gt;would ssh to&lt;/code&gt;bastion.example.org`. There it would execute netcat, and then try to connect from the client, &lt;em&gt;through&lt;/em&gt; the ssh to bastion host,  &lt;em&gt;through&lt;/em&gt; the netcat pipe and to the db-server to establish the final ssh&amp;nbsp;connection.&lt;/p&gt;
+&lt;p&gt;ProxyCommand can best be used by implementing a &lt;code&gt;forced_command&lt;/code&gt; script on the bastion&amp;nbsp;host. &lt;/p&gt;
+&lt;h4&gt;Forced Command Script on&amp;nbsp;Bastion&lt;/h4&gt;
+&lt;p&gt;All proxy commands are executed by a single user (&lt;em&gt;sshgw&lt;/em&gt;). This user has the following &lt;code&gt;.ssh/authorized_keys&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# ~sshgw/.ssh/authorized_keys&lt;/span&gt;
+&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forwarding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pty&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;X11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forwarding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/opt/sshgw/sshgw alice&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rsa&lt;/span&gt; &lt;span class="n"&gt;AAAAB&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt;&lt;span class="mf"&gt;.1234&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;Alice&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Laptop&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;
+
+&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forwarding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pty&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;X11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forwarding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/opt/sshgw/sshgw alice&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rsa&lt;/span&gt; &lt;span class="n"&gt;AAAAB&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt;&lt;span class="mf"&gt;.5678&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;Alice&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Workstation&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;
+
+&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forwarding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pty&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;X11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;forwarding&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/opt/sshgw/sshgw bob&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rsa&lt;/span&gt; &lt;span class="n"&gt;AAAAB&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="n"&gt;abcd&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;Bob&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Workstation&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that &lt;em&gt;alice&lt;/em&gt; has two public keys that allow her to log&amp;nbsp;in.&lt;/p&gt;
+&lt;p&gt;&lt;span class="dquo"&gt;&amp;#8220;&lt;/span&gt;`bash&lt;/p&gt;
+&lt;h1&gt;!/bin/bash&lt;/h1&gt;
+&lt;h1&gt;This is&amp;nbsp;/opt/sshgw/sshgw&lt;/h1&gt;
+&lt;h1&gt;- Executable by user&amp;nbsp;sshgw&lt;/h1&gt;
+&lt;h1&gt;-&amp;nbsp;Params&lt;/h1&gt;
+&lt;h1&gt;- $1 : Name of the user. This is passed from the forced command in&amp;nbsp;authorized_keys&lt;/h1&gt;
 &lt;h3&gt;Evaluation&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;WORK&lt;/span&gt; &lt;span class="caps"&gt;IN&lt;/span&gt; &lt;span class="caps"&gt;PROGRESS&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jens Neuhalfen</dc:creator><pubDate>Sun, 24 Aug 2014 23:15:00 +0200</pubDate><guid>tag:www.basshtion.org,2014-08-23:proxy_command.html</guid><category>ProxyCommand</category></item></channel></rss>

@@ -10,7 +10,7 @@
 
 
 
-<link rel="canonical" href="http://www.basshtion.org/dnat.html">
+<link rel="canonical" href="./dnat.html">
 
         <meta name="author" content="Jens Neuhalfen" />
         <meta name="keywords" content="dnat,firewall" />
@@ -19,16 +19,14 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="http://www.basshtion.org/theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
-    <link href="http://www.basshtion.org/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./theme/css/bootstrap.solarizeddark.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://www.basshtion.org/theme/css/pygments/solarizeddark.css" rel="stylesheet">
-        <link href="http://www.basshtion.org/theme/css/typogrify.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://www.basshtion.org/theme/css/style.css" type="text/css"/>
-        <link href="http://www.basshtion.org/static/custom.css" rel="stylesheet">
+    <link href="./theme/css/pygments/solarizeddark.css" rel="stylesheet">
+        <link href="./theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+        <link href="./static/custom.css" rel="stylesheet">
 
-        <link href="http://www.basshtion.org/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="baSSHtion ATOM Feed"/>
 
 </head>
 <body>
@@ -42,40 +40,40 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="http://www.basshtion.org/" class="navbar-brand">
+            <a href="./" class="navbar-brand">
 baSSHtion            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                             <li><a href="http://www.basshtion.org/pages/why.html">
+                             <li><a href="./pages/why.html">
                              Why?
                              </a></li>
-                             <li><a href="http://www.basshtion.org/pages/contribute.html">
+                             <li><a href="./pages/contribute.html">
                              Contribute
                              </a></li>
-                             <li><a href="http://www.basshtion.org/pages/rfc.html">
+                             <li><a href="./pages/rfc.html">
                              SSHv2&nbsp;internals
                              </a></li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="implementation-options">Implementation options <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="implementation-options">
-                                                <li><a href="http://www.basshtion.org/dnat.html"><span class="caps">DNAT</span></a></li>
-                                                <li><a href="http://www.basshtion.org/proxy_command.html">ProxyCommand</a></li>
-                                                <li><a href="http://www.basshtion.org/jump_host_interactive.html">JumpHost/interactive</a></li>
-                                                <li><a href="http://www.basshtion.org/jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
+                                                <li><a href="./dnat.html"><span class="caps">DNAT</span></a></li>
+                                                <li><a href="./proxy_command.html">ProxyCommand</a></li>
+                                                <li><a href="./jump_host_interactive.html">JumpHost/interactive</a></li>
+                                                <li><a href="./jump_host_non_interactive.html">JumpHost/non-interactive</a></li>
                               </ul>
                             </li>
                         </li>
                         <li class="dropdown">
                                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="misc">Misc <span class="caret"></span></a>
                               <ul class="dropdown-menu" aria-labelledby="misc">
-                                                <li><a href="http://www.basshtion.org/others.html">Others</a></li>
+                                                <li><a href="./others.html">Others</a></li>
                               </ul>
                             </li>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://www.basshtion.org/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -90,7 +88,7 @@ baSSHtion            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://www.basshtion.org/dnat.html"
+                    <a href="./dnat.html"
                        rel="bookmark"
                        title="Permalink to DNAT">
                         <span class="caps">DNAT</span>
@@ -101,7 +99,7 @@ baSSHtion            </a>
                 <p>A possibility to give operators <span class="caps">SSH</span> access to backed systems is to use Port <em><span class="caps">DNAT</span></em>. With Port <span class="caps">DNAT</span>, a host exposed to the internet <a href="http://en.wikipedia.org/wiki/Network_address_translation#DNAT">DNATs</a> some of its ports to the backed systems. E.g. <code>public-ip:2224</code> is forwarded to <code>db-server:22</code>, and <code>public-ip:2222</code> is forwarded to <code>app-server:22</code>. To access the <span class="caps">DB</span> server the operator points ssh to the public ip, e.g. <code>ssh public-ip -p2224</code>.</p>
 <h2>Port <span class="caps">DNAT</span></h2>
 <p>When using Port <span class="caps">DNAT</span> to access backend hosts, the backend hosts are partially exposed to the internet. The firewall will forward a port on its external interface to an ssh server running on a backend system. E.g. <code>public-ip:2224</code> is forwarded to <code>db-server:22</code>, and <code>public-ip:2223</code> is forwarded to <code>app-server:22</code>. </p>
-<p><img alt="" src="http://www.basshtion.org/images/DNAT.png" /></p>
+<p><img alt="" src="./images/DNAT.png" /></p>
 <p>The operator points ssh to the public ip, e.g. <code>ssh public-ip -p2222</code> to transparently ssh to <code>db-server</code>.</p>
 <h3>Example&nbsp;implementation</h3>
 <p>Setting up <span class="caps">NAT</span> is straight forward and requires a single firewall change per host.  Users are only managed on the backend&nbsp;systems.</p>
@@ -195,9 +193,9 @@ ssh public-ip -p2224
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://www.basshtion.org/tag/dnat.html">dnat</a>
+	<a href="./tag/dnat.html">dnat</a>
         /
-	<a href="http://www.basshtion.org/tag/firewall.html">firewall</a>
+	<a href="./tag/firewall.html">firewall</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -215,46 +213,46 @@ ssh public-ip -p2224
 
 
 
-                <li class="list-group-item"><a href="http://www.basshtion.org/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/jumphost.html">
-                                jumphost
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/interactive.html">
-                                interactive
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/about.html">
+                            <a href="./tag/about.html">
                                 about
                             </a>
                         </li>
                         <li class="list-group-item tag-1">
-                            <a href="http://www.basshtion.org/tag/overview.html">
+                            <a href="./tag/overview.html">
                                 overview
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/firewall.html">
-                                firewall
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/interactive.html">
+                                interactive
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="./tag/jumphost.html">
+                                jumphost
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/others.html">
-                                others
+                            <a href="./tag/proxycommand.html">
+                                ProxyCommand
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/dnat.html">
+                            <a href="./tag/dnat.html">
                                 dnat
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://www.basshtion.org/tag/proxycommand.html">
-                                ProxyCommand
+                            <a href="./tag/others.html">
+                                others
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="./tag/firewall.html">
+                                firewall
                             </a>
                         </li>
                     </ul>
@@ -301,13 +299,13 @@ ssh public-ip -p2224
       </div>
    </div>
 </footer>
-<script src="http://www.basshtion.org/theme/js/jquery.min.js"></script>
+<script src="./theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://www.basshtion.org/theme/js/bootstrap.min.js"></script>
+<script src="./theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="http://www.basshtion.org/theme/js/respond.min.js"></script>
+<script src="./theme/js/respond.min.js"></script>
 
 </body>
 </html>
